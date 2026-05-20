@@ -3,117 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>나만의 루틴 알리미 (통합본)</title>
+    <title>나만의 루틴 알리미 (오늘의 할 일 포함)</title>
     <style>
-        body { font-family: 'Malgun Gothic', sans-serif; background-color: #f5f7fa; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 380px; }
+        body { font-family: 'Malgun Gothic', sans-serif; background-color: #f5f7fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px 0; box-sizing: border-box; }
+        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 400px; }
         h1 { font-size: 24px; color: #333; text-align: center; margin-bottom: 20px; }
+        h2 { font-size: 18px; color: #444; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 5px; }
         .input-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; font-size: 14px; }
         input, select { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
-        button.btn-add { width: 100%; padding: 12px; background-color: #4CAF50; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; margin-bottom: 10px; }
-        .routine-list { margin-top: 25px; border-top: 2px solid #eee; padding-top: 15px; }
+        .btn-add { width: 100%; padding: 12px; background-color: #4CAF50; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; margin-bottom: 20px; }
+        .btn-add:hover { background-color: #45a049; }
+        
+        /* 섹션 구분 스타일 */
+        .section { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px solid #f0f2f5; }
+        .section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        
         ul { list-style: none; padding: 0; margin: 0; }
-        li { background: #f9f9f9; padding: 10px 12px; border-radius: 6px; margin-bottom: 8px; border-left: 4px solid #4CAF50; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
-        .routine-info { display: flex; flex-direction: column; gap: 2px; }
-        .routine-period { font-size: 12px; color: #888; }
-        .btn-delete { background: none; border: none; color: #ff5252; cursor: pointer; font-size: 13px; font-weight: bold; }
+        li { background: #f9f9f9; padding: 12px; border-radius: 6px; margin-bottom: 8px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* 오늘의 할 일 전용 스타일 */
+        .today-box { border-left: 5px solid #ff9800; background: #fffde7; }
+        .today-text { font-weight: bold; color: #e65100; }
+        .btn-check { background-color: #ff9800; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; }
+        .btn-check:hover { background-color: #f57c00; }
+        .no-task { color: #888; font-size: 14px; text-align: center; padding: 15px 0; background: #fafafa; border-radius: 6px; border: 1px dashed #ddd; }
+        
+        /* 전체 목록 전용 스타일 */
+        .all-box { border-left: 5px solid #2196F3; }
+        .routine-period { font-size: 11px; color: #888; display: block; margin-top: 2px; }
+        .btn-delete { background: none; border: none; color: #ff5252; cursor: pointer; font-size: 13px; font-weight: bold; padding: 4px; }
+        .btn-delete:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>📅 루틴 알리미</h1>
+    <h1>📅 루틴 매니저</h1>
     
-    <div class="input-group">
-        <label for="routineName">루틴 이름</label>
-        <input type="text" id="routineName" placeholder="예: 분리수거 하기, 영양제 먹기">
+    <!-- 1. 루틴 등록 폼 -->
+    <div class="section">
+        <div class="input-group">
+            <label for="routineName">새 루틴 이름</label>
+            <input type="text" id="routineName" placeholder="예: 분리수거, 영양제 챙겨먹기">
+        </div>
+        <div class="input-group">
+            <label for="routinePeriod">반복 주기</label>
+            <select id="routinePeriod">
+                <option value="1">매일</option>
+                <option value="3">3일에 한 번</option>
+                <option value="7">매주 (7일 주기)</option>
+                <option value="14">2주에 한 번 (14일 주기)</option>
+                <option value="30">한 달에 한 번</option>
+            </select>
+        </div>
+        <button class="btn-add" onclick="addRoutine()">루틴 등록하기</button>
     </div>
-    
-    <div class="input-group">
-        <label for="routinePeriod">알림 주기</label>
-        <select id="routinePeriod">
-            <option value="1">매일</option>
-            <option value="3">3일에 한 번</option>
-            <option value="7">매주 (7일 주기)</option>
-            <option value="14">2주에 한 번 (14일 주기)</option>
-            <option value="30">한 달에 한 번</option>
-        </select>
-    </div>
-    
-    <button class="btn-add" onclick="addRoutine()">루틴 등록하기</button>
 
-    <div class="routine-list">
-        <h2>내 루틴 목록</h2>
-        <ul id="listContainer"></ul>
+    <!-- 2. 오늘의 할 일 목록 (새로 추가된 핵심 기능!) -->
+    <div class="section">
+        <h2>🔥 오늘 해야 할 일</h2>
+        <ul id="todayContainer">
+            <!-- 오늘 주기인 루틴들이 여기에 뜹니다 -->
+        </ul>
+    </div>
+
+    <!-- 3. 등록된 전체 루틴 관리 목록 -->
+    <div class="section">
+        <h2>📋 전체 루틴 목록</h2>
+        <ul id="allContainer">
+            <!-- 저장된 전체 목록이 여기에 뜹니다 -->
+        </ul>
     </div>
 </div>
 
 <script>
-    // 브라우저가 켜질 때 저장된 데이터 불러오기
     let routines = JSON.parse(localStorage.getItem('routines')) || [];
 
-    // 화면 갱신 기능 + 날짜 계산 후 알림 띄우기 기능 탑재
     function displayRoutines() {
-        const listContainer = document.getElementById('listContainer');
-        listContainer.innerHTML = "";
+        const todayContainer = document.getElementById('todayContainer');
+        const allContainer = document.getElementById('allContainer');
+        
+        todayContainer.innerHTML = "";
+        allContainer.innerHTML = "";
         
         const today = new Date();
-        today.setHours(0, 0, 0, 0); // 시간 단위를 제외하고 날짜 비교를 위해 초기화
+        today.setHours(0, 0, 0, 0); 
         
-        let alertMessages = [];
+        let todayTaskCount = 0;
 
         routines.forEach((routine, index) => {
-            // 화면에 뿌려주기
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <div class="routine-info">
+            // --- 1. 전체 루틴 목록 그리기 ---
+            const liAll = document.createElement('li');
+            liAll.className = 'all-box';
+            liAll.innerHTML = `
+                <div>
                     <strong>${routine.name}</strong> 
-                    <span class="routine-period">${routine.periodText} (시작: ${routine.startDate})</span>
+                    <span class="routine-period">🔁 ${routine.periodText} (시작일: ${routine.startDate})</span>
                 </div>
                 <button class="btn-delete" onclick="deleteRoutine(${index})">❌ 삭제</button>
             `;
-            listContainer.appendChild(li);
+            allContainer.appendChild(liAll);
 
-            // [핵심] 오늘이 알림 주기 날짜인지 실시간 계산
+            // --- 2. 오늘 해야 할 일 계산 및 그리기 ---
             const startDay = new Date(routine.startDate);
             startDay.setHours(0, 0, 0, 0);
             
-            // 지난 일수 계산
-            const diffTime = Math.abs(today - startDay);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const diffTime = today - startDay;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
             
-            // 주기에 딱 맞아 떨어지면 알림 명단에 추가
-            if (diffDays % routine.period === 0) {
-                alertMessages.append(`[${routine.name}]`);
+            // 오늘 날짜가 시작일 이후이고, 주기에 딱 맞아 떨어지는지 계산
+            if (diffDays >= 0 && diffDays % routine.period === 0) {
+                todayTaskCount++;
+                const liToday = document.createElement('li');
+                liToday.className = 'today-box';
+                liToday.innerHTML = `
+                    <span class="today-text">✔️ ${routine.name}</span>
+                    <button class="btn-check" onclick="completeTask('${routine.name}', this)">완료</button>
+                `;
+                todayContainer.appendChild(liToday);
             }
         });
 
-        // 오늘 해당하는 루틴 알림이 있다면 화면 브라우저 알림창 띄우기
-        if (alertMessages.length > 0) {
-            setTimeout(() => {
-                alert(`🔔 오늘의 루틴 알림!\n\n${alertMessages.join('\n')}\n\n해당 일정을 잊지 말고 처리하세요!`);
-            }, 500);
+        // 오늘 해야 할 일이 하나도 없을 때 보여줄 화면
+        if (todayTaskCount === 0) {
+            todayContainer.innerHTML = `<div class="no-task">🎉 오늘 예정된 루틴이 없습니다! 푹 쉬세요.</div>`;
         }
     }
 
-    // 신규 등록 기능
+    // 루틴 추가 기능
     function addRoutine() {
         const nameInput = document.getElementById('routineName');
         const periodSelect = document.getElementById('routinePeriod');
 
-        if (nameInput.value.trim() === "") {
-            alert("루틴 이름을 입력해 주세요!");
-            return;
-        }
+        if (nameInput.value.trim() === "") { alert("루틴 이름을 입력해 주세요!"); return; }
 
-        const todayStr = new Date().toISOString().split('T')[0]; // YYYY-MM-DD 형태로 변환
+        const tzOffset = (new Date()).getTimezoneOffset() * 60000;
+        const localISOTime = (new Date(Date.now() - tzOffset)).toISOString().split('T')[0];
 
         const newRoutine = {
             name: nameInput.value,
             period: parseInt(periodSelect.value),
             periodText: periodSelect.options[periodSelect.selectedIndex].text,
-            startDate: todayStr
+            startDate: localISOTime
         };
 
         routines.push(newRoutine);
@@ -122,16 +154,26 @@
         displayRoutines();
     }
 
-    // 삭제 기능
+    // 루틴 삭제 기능
     function deleteRoutine(index) {
-        if(confirm("이 루틴을 삭제하시겠습니까?")) {
+        if(confirm("이 루틴을 완전히 삭제하시겠습니까? 전체 기록에서 사라집니다.")) {
             routines.splice(index, 1);
             localStorage.setItem('routines', JSON.stringify(routines));
             displayRoutines();
         }
     }
 
-    // 페이지가 열리자마자 바로 로딩 및 알림 계산 실행
+    // 오늘 할 일 완료 버튼 누를 때 작동
+    function completeTask(name, button) {
+        alert(`👏 [${name}] 완료! 수고하셨습니다.`);
+        // 화면에서만 부드럽게 지워줍니다.
+        const li = button.parentElement;
+        li.style.opacity = "0.5";
+        button.disabled = true;
+        button.innerText = "🎉 완료됨";
+    }
+
+    // 첫 실행
     displayRoutines();
 </script>
 </body>
