@@ -20,7 +20,7 @@
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            width: 350px;
+            width: 380px;
         }
         h1 {
             font-size: 24px;
@@ -45,7 +45,7 @@
             border-radius: 6px;
             font-size: 14px;
         }
-        button {
+        button.btn-add {
             width: 100%;
             padding: 12px;
             background-color: #4CAF50;
@@ -56,7 +56,7 @@
             cursor: pointer;
             font-weight: bold;
         }
-        button:hover {
+        button.btn-add:hover {
             background-color: #45a049;
         }
         .routine-list {
@@ -76,13 +76,36 @@
         }
         li {
             background: #f9f9f9;
-            padding: 10px;
+            padding: 10px 12px;
             border-radius: 6px;
             margin-bottom: 8px;
             border-left: 4px solid #4CAF50;
             font-size: 14px;
             display: flex;
             justify-content: space-between;
+            align-items: center; /* 세로 중앙 정렬 */
+        }
+        .routine-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .routine-period {
+            font-size: 12px;
+            color: #888;
+        }
+        .btn-delete {
+            background: none;
+            border: none;
+            color: #ff5252;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        .btn-delete:hover {
+            background-color: #ffebee;
         }
     </style>
 </head>
@@ -108,7 +131,7 @@
         </select>
     </div>
     
-    <button onclick="addRoutine()">루틴 등록하기</button>
+    <button class="btn-add" onclick="addRoutine()">루틴 등록하기</button>
 
     <!-- 등록된 루틴 목록이 보일 공간 -->
     <div class="routine-list">
@@ -120,7 +143,7 @@
 </div>
 
 <script>
-    // 버튼을 클릭했을 때 작동하는 기능 (JavaScript)
+    // 루틴을 추가하는 기능
     function addRoutine() {
         const nameInput = document.getElementById('routineName');
         const periodSelect = document.getElementById('routinePeriod');
@@ -134,9 +157,14 @@
 
         // 새 리스트 아이템(li) 생성
         const li = document.createElement('li');
+        
+        // 내부에 들어갈 글자와 [삭제] 버튼 생성
         li.innerHTML = `
-            <strong>${nameInput.value}</strong> 
-            <span>(${periodSelect.options[periodSelect.selectedIndex].text})</span>
+            <div class="routine-info">
+                <strong>${nameInput.value}</strong> 
+                <span class="routine-period">${periodSelect.options[periodSelect.selectedIndex].text}</span>
+            </div>
+            <button class="btn-delete" onclick="deleteRoutine(this)">❌ 삭제</button>
         `;
 
         // 화면 목록에 추가
@@ -144,6 +172,13 @@
 
         // 입력창 초기화
         nameInput.value = "";
+    }
+
+    // 루틴을 삭제하는 기능 (추가된 부분)
+    function deleteRoutine(button) {
+        // 클릭된 삭제 버튼의 부모 요소(li)를 찾아서 목록에서 지웁니다.
+        const li = button.parentElement;
+        li.remove();
     }
 </script>
 
