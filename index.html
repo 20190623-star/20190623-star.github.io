@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나만의 루틴 알리미</title>
+    <style>
+        /* 깔끔한 디자인을 위한 스타일 설정 (CSS) */
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 350px;
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .routine-list {
+            margin-top: 25px;
+            border-top: 2px solid #eee;
+            padding-top: 15px;
+        }
+        .routine-list h2 {
+            font-size: 18px;
+            color: #444;
+            margin-bottom: 10px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            border-left: 4px solid #4CAF50;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📅 루틴 알리미</h1>
+    
+    <!-- 루틴 입력 폼 -->
+    <div class="input-group">
+        <label for="routineName">루틴 이름</label>
+        <input type="text" id="routineName" placeholder="예: 분리수거 하기, 영양제 먹기">
+    </div>
+    
+    <div class="input-group">
+        <label for="routinePeriod">알림 주기</label>
+        <select id="routinePeriod">
+            <option value="1">매일 (1일 주기)</option>
+            <option value="3">3일에 한 번</option>
+            <option value="7">매주 (7일 주기)</option>
+            <option value="14">2주에 한 번 (14일 주기)</option>
+            <option value="30">한 달에 한 번</option>
+        </select>
+    </div>
+    
+    <button onclick="addRoutine()">루틴 등록하기</button>
+
+    <!-- 등록된 루틴 목록이 보일 공간 -->
+    <div class="routine-list">
+        <h2>내 루틴 목록</h2>
+        <ul id="listContainer">
+            <!-- 자바스크립트가 여기에 항목을 추가합니다 -->
+        </ul>
+    </div>
+</div>
+
+<script>
+    // 버튼을 클릭했을 때 작동하는 기능 (JavaScript)
+    function addRoutine() {
+        const nameInput = document.getElementById('routineName');
+        const periodSelect = document.getElementById('routinePeriod');
+        const listContainer = document.getElementById('listContainer');
+
+        // 입력값이 비어있는지 확인
+        if (nameInput.value.trim() === "") {
+            alert("루틴 이름을 입력해 주세요!");
+            return;
+        }
+
+        // 새 리스트 아이템(li) 생성
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <strong>${nameInput.value}</strong> 
+            <span>(${periodSelect.options[periodSelect.selectedIndex].text})</span>
+        `;
+
+        // 화면 목록에 추가
+        listContainer.appendChild(li);
+
+        // 입력창 초기화
+        nameInput.value = "";
+    }
+</script>
+
+</body>
+</html>
