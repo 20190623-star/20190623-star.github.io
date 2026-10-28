@@ -3,59 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📅 나만의 스마트 달력 루틴 매니저</title>
+    <title>ROUTINE</title>
     <style>
-        body { font-family: 'Malgun Gothic', sans-serif; background-color: #f0f4f8; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px 0; box-sizing: border-box; }
-        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); width: 450px; }
-        h1 { font-size: 24px; color: #1e3a8a; text-align: center; margin-bottom: 20px; }
-        h2 { font-size: 18px; color: #1e40af; margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 5px; }
-        .input-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; color: #4b5563; font-size: 14px; }
-        input, select { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #bae6fd; border-radius: 6px; font-size: 14px; margin-bottom: 5px; background-color: #f8fafc; }
-        input:focus, select:focus { outline: 2px solid #38bdf8; }
-        .btn-add { width: 100%; padding: 12px; background-color: #0ea5e9; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(14, 165, 233, 0.2); }
-        .btn-add:hover { background-color: #0284c7; }
+        :root {
+            --bg-main: #f4f4f2;
+            --bg-card: #ffffff;
+            --border-color: #e3e3e0;
+            --text-main: #4a4a48;
+            --text-muted: #8a8a85;
+            --primary: #878f84;
+            --primary-hover: #70786d;
+            --accent-bg: #fafaf9;
+            --today-bg: #697067;
+        }
+
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--bg-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px 0; box-sizing: border-box; color: var(--text-main); }
+        .container { background: var(--bg-card); padding: 30px; border-radius: 10px; border: 1px solid var(--border-color); width: 450px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        h1 { font-size: 26px; color: var(--text-main); text-align: center; margin-bottom: 24px; font-weight: 700; letter-spacing: 2px; }
+        h2 { font-size: 15px; color: var(--text-main); margin-top: 0; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; font-weight: 600; letter-spacing: -0.3px; }
+        .input-group { margin-bottom: 16px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--text-main); font-size: 13px; }
+        input, select { width: 100%; padding: 10px 12px; box-sizing: border-box; border: 1px solid var(--border-color); border-radius: 6px; font-size: 14px; margin-bottom: 5px; background-color: var(--accent-bg); color: var(--text-main); transition: border-color 0.2s; }
+        input:focus, select:focus { outline: none; border-color: var(--primary); background-color: var(--bg-card); }
+        .btn-add { width: 100%; padding: 12px; background-color: var(--primary); color: white; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 600; margin-bottom: 20px; transition: background-color 0.2s; }
+        .btn-add:hover { background-color: var(--primary-hover); }
         
         /* 섹션 구분 스타일 */
-        .section { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px solid #e2e8f0; }
+        .section { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
         .section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         
         /* 캘린더 미니 스타일 */
-        .calendar-container { margin-bottom: 15px; background: #f0f9ff; padding: 10px; border-radius: 8px; border: 1px solid #e0f2fe; }
-        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .calendar-header button { background: #e0f2fe; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 12px; color: #0369a1; font-weight: bold; }
-        .calendar-header button:hover { background: #bae6fd; }
-        .calendar-header h3 { margin: 0; font-size: 15px; color: #0369a1; }
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font-size: 11px; }
-        .weekday { font-weight: bold; color: #64748b; padding-bottom: 4px; }
-        .day { padding: 6px 0; border-radius: 4px; cursor: pointer; font-weight: bold; color: #334155; position: relative; }
-        .day:hover { background: #e0f2fe; }
-        .day.today { background: #38bdf8; color: white; }
-        .day.selected { border: 2px solid #0284c7; box-sizing: border-box; }
-        .day.has-task::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: #0ea5e9; border-radius: 50%; }
+        .calendar-container { margin-bottom: 15px; background: var(--bg-card); padding: 14px; border-radius: 8px; border: 1px solid var(--border-color); }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .calendar-header button { background: var(--accent-bg); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; color: var(--text-main); }
+        .calendar-header button:hover { background: #eeeede; }
+        .calendar-header h3 { margin: 0; font-size: 14px; color: var(--text-main); font-weight: 600; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; font-size: 12px; }
+        .weekday { font-weight: 500; color: var(--text-muted); padding-bottom: 4px; }
+        .day { padding: 6px 0; border-radius: 6px; cursor: pointer; font-weight: 600; color: var(--text-main); position: relative; border: 1px solid transparent; }
+        .day:hover { background: var(--accent-bg); }
+        .day.today { background: var(--today-bg); color: white; }
+        .day.selected { border: 1px solid var(--text-main); box-sizing: border-box; background: var(--accent-bg); color: var(--text-main); }
+        .day.today.selected { background: var(--today-bg); color: white; border: 1px solid var(--text-main); }
+        .day.has-task::after { content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--primary); border-radius: 50%; }
         .day.today.has-task::after { background: white; }
 
         ul { list-style: none; padding: 0; margin: 0; }
-        li { background: #f8fafc; padding: 12px; border-radius: 6px; margin-bottom: 8px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #f1f5f9; }
+        li { background: var(--accent-bg); padding: 12px; border-radius: 6px; margin-bottom: 8px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); }
         
-        /* 오늘/선택일 할 일 전용 스타일 (하늘색 테마) */
-        .today-box { border-left: 5px solid #0ea5e9; background: #f0f9ff; }
-        .today-text { font-weight: bold; color: #0369a1; }
-        .btn-check { background-color: #38bdf8; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; }
-        .btn-check:hover { background-color: #0ea5e9; }
-        .no-task { color: #64748b; font-size: 14px; text-align: center; padding: 15px 0; background: #f8fafc; border-radius: 6px; border: 1px dashed #cbd5e1; }
+        /* 할 일 전용 스타일 (뮤트 감성 톤) */
+        .today-box { border-left: 4px solid var(--primary); background: #f7f7f5; }
+        .today-text { font-weight: 600; color: var(--primary-hover); }
+        .btn-check { background-color: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-color); padding: 5px 12px; border-radius: 4px; cursor: pointer; font-weight: 500; font-size: 12px; transition: all 0.2s; }
+        .btn-check:hover { background: var(--border-color); }
+        .no-task { color: var(--text-muted); font-size: 13px; text-align: center; padding: 20px 0; background: var(--accent-bg); border-radius: 6px; border: 1px dashed var(--border-color); }
         
         /* 전체 목록 전용 스타일 */
-        .all-box { border-left: 5px solid #1e40af; }
-        .routine-period { font-size: 11px; color: #64748b; display: block; margin-top: 2px; }
-        .btn-delete { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 13px; font-weight: bold; padding: 4px; }
+        .all-box { border-left: 4px solid var(--text-muted); }
+        .routine-period { font-size: 11px; color: var(--text-muted); display: block; margin-top: 3px; }
+        .btn-delete { background: none; border: none; color: #b56969; cursor: pointer; font-size: 12px; font-weight: 600; padding: 4px; }
         .btn-delete:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>📅 루틴 매니저 스카이</h1>
+    <h1>ROUTINE</h1>
     
     <!-- 1. 루틴 등록 폼 -->
     <div class="section">
@@ -107,7 +120,7 @@
 
     <!-- 3. 선택한 날짜의 할 일 목록 -->
     <div class="section">
-        <h2 id="todaySectionTitle">🔹 오늘 해야 할 일</h2>
+        <h2 id="todaySectionTitle">📋 오늘 해야 할 일</h2>
         <ul id="todayContainer"></ul>
     </div>
 
@@ -164,34 +177,21 @@
         const allContainer = document.getElementById('allContainer');
         const todaySectionTitle = document.getElementById('todaySectionTitle');
         
-        todayContainer.innerHTML = "";
-        allContainer.innerHTML = "";
-        
-        const isSelectedToday = selectedDate.toDateString() === new Date().toDateString();
-        todaySectionTitle.innerHTML = isSelectedToday ? "🔹 오늘 해야 할 일" : `🔹 ${selectedDate.getMonth()+1}월 ${selectedDate.getDate()}일의 할 일`;
-        
-        let taskCount = 0;
-
-        routines.forEach((routine, index) => {
-            const liAll = document.createElement('li');
-            liAll.className = 'all-box';
-            liAll.innerHTML = `
-                <div>
-                    <strong>${routine.name}</strong> 
-                    <span class="routine-period">🔁 ${routine.cycleText} (시작일: ${routine.startDate})</span>
-                </div>
-                <button class="btn-delete" onclick="deleteRoutine(${index})">❌ 삭제</button>
-            `;
-            allContainer.appendChild(liAll);
-
-            if (isRoutineOnDate(routine, selectedDate)) {
-                taskCount++;
-                const liToday = document.createElement('li');
-                liToday.className = 'today-box';
-                liToday.innerHTML = `
-                🔹 ${routine.name}
-완료
-`;
+todayContainer.innerHTML = "";
+allContainer.innerHTML = "";
+const isSelectedToday = selectedDate.toDateString() === new Date().toDateString();
+todaySectionTitle.innerHTML = isSelectedToday ? "📋 오늘 해야 할 일" : 📋 ${selectedDate.getMonth()+1}월 ${selectedDate.getDate()}일의 할 일;
+let taskCount = 0;
+routines.forEach((routine, index) => {
+const liAll = document.createElement('li');
+liAll.className = 'all-box';
+liAll.innerHTML = <div> <strong>${routine.name}</strong>  <span class="routine-period">🔁 ${routine.cycleText} (시작일: ${routine.startDate})</span> </div> <button class="btn-delete" onclick="deleteRoutine(${index})">❌ 삭제</button>;
+allContainer.appendChild(liAll);
+if (isRoutineOnDate(routine, selectedDate)) {
+taskCount++;
+const liToday = document.createElement('li');
+liToday.className = 'today-box';
+liToday.innerHTML = <span class="today-text">▪️ ${routine.name}</span> <button class="btn-check" onclick="completeTask('${routine.name}', this)">완료</button>;
 todayContainer.appendChild(liToday);
 }
 });
