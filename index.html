@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ROUTINE</title>
     <style>
-        /* 🎨 팬톤 13-4304, 12-4303, 15-3922 매칭 맑은 스카이 테마 */
+        /* 🎨 PANTONE 13-4304, 12-4303, 15-3922 매칭 맑은 스카이 세레니티 테마 */
         :root {
-            --bg-main: #f0f4f8;       /* PANTONE 13-4304 Ballad Blue 맑은 베이스 */
+            --bg-main: #f0f4f8;       /* 팬톤 13-4304 Ballad Blue 연한 베이스 */
             --bg-card: #ffffff;       
-            --border-color: #bcd2e8;   /* PANTONE 12-4303 Spun Sugar 선명한 하늘색 선 */
+            --border-color: #bcd2e8;   /* 팬톤 12-4303 Spun Sugar 하늘색 테두리 선 */
             --text-main: #2a4365;      
             --text-muted: #64748b;     
-            --primary: #9aa8ca;       /* PANTONE 15-3922 Air Blue 차분한 스카이 포인트 */
+            --primary: #9aa8ca;       /* 팬톤 15-3922 Air Blue 차분한 소프트 블루 */
             --primary-hover: #7b8cb6; 
             --accent-bg: #f8fafc;     
             --today-bg: #4a6572;      
@@ -36,7 +36,7 @@
         .section { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 2px solid #e2edf5; }
         .section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         
-        /* 캘린더 테두리와 칸 구분을 확실하고 선명하게 디자인 변경 */
+        /* 캘린더 컨테이너 레이아웃 명확화 */
         .calendar-container { margin-bottom: 15px; background: #fafcff; padding: 14px; border-radius: 10px; border: 1px solid var(--border-color); }
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .calendar-header button { background: var(--bg-card); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; color: var(--text-main); font-weight: bold; }
@@ -48,7 +48,6 @@
         .day { padding: 8px 0; border-radius: 6px; cursor: pointer; font-weight: bold; color: #334155; position: relative; border: 1px solid #e2edf5; background: #ffffff; }
         .day:hover { background: #e6f0f7; }
         
-        /* 달력 활성화 색상 명확화 */
         .day.today { background: var(--today-bg); color: white; border-color: var(--today-bg); }
         .day.selected { border: 2px solid var(--primary); box-sizing: border-box; background: #f0f4f8; }
         .day.has-task::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--primary); border-radius: 50%; }
@@ -74,7 +73,7 @@
 <div class="container">
     <h1>ROUTINE</h1>
     
-    <!-- 1. 스마트 루틴 등록 폼 -->
+    <!-- 1. 루틴 등록 입력 폼 -->
     <div class="section">
         <div class="input-group">
             <label for="routineName">루틴 이름</label>
@@ -192,8 +191,8 @@
         switch(routine.cycle) {
             case 'daily': return true;
             case 'every-2-days': return diffDays % 2 === 0;
-                case 'weekly': return diffDays % 7 === 0;
-case 'every-2-weeks': return diffDays % 14 === 0;
+            case 'weekly': return diffDays % 7 === 0;
+                case 'every-2-weeks': return diffDays % 14 === 0;
 case 'custom-days': return routine.details && routine.details.days ? routine.details.days.includes(dayOfWeek) : false;
 case 'monthly': return targetDate.getDate() === parseInt(routine.details.monthDay);
 case 'specific-date':
@@ -232,7 +231,6 @@ todayContainer.innerHTML = '🎉 예정된 루틴이 없습니다! 푹 쉬세요
 }
 renderCalendar();
 }
-/* 🧠 백틱 기호(`)를 자바스크립트 기본 덧셈문 구조로 우회 수정하여 브라우저 강제 먹통 에러 완전 전면 차단 */
 function renderCalendar() {
 const year = currentCalDate.getFullYear();
 const month = currentCalDate.getMonth();
