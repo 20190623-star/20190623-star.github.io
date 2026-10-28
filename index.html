@@ -6,6 +6,7 @@
     <title>ROUTINE</title>
     <style>
         :root {
+            /* 이전 색상 테마 유지 */
             --bg-main: #f0f4f8;       
             --bg-card: #ffffff;       
             --border-color: #bcd2e8;   
@@ -16,36 +17,240 @@
             --accent-bg: #f8fafc;     
             --today-bg: #4a6572;      
         }
-        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--bg-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px 0; box-sizing: border-box; color: var(--text-main); }
-        .container { background: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color); width: 450px; box-shadow: 0 4px 20px rgba(42, 67, 101, 0.08); }
-        h1 { font-size: 26px; color: var(--text-main); text-align: center; margin-bottom: 24px; font-weight: 700; letter-spacing: 2px; }
-        h2 { font-size: 16px; color: var(--text-main); margin-top: 0; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; font-weight: 600; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            background-color: var(--bg-main); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 20px 0; 
+            box-sizing: border-box; 
+            color: var(--text-main); 
+        }
+        .container { 
+            background: var(--bg-card); 
+            padding: 30px; 
+            border-radius: 12px; 
+            border: 1px solid var(--border-color); 
+            width: 450px; 
+            box-shadow: 0 4px 20px rgba(42, 67, 101, 0.08); 
+        }
+        h1 { 
+            font-size: 26px; 
+            color: var(--text-main); 
+            text-align: center; 
+            margin-top: 0;
+            margin-bottom: 24px; 
+            font-weight: 700; 
+            letter-spacing: 2px; 
+        }
+        h2 { 
+            font-size: 16px; 
+            color: var(--text-main); 
+            margin-top: 0; 
+            margin-bottom: 14px; 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            font-weight: 600; 
+        }
         .input-group { margin-bottom: 14px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; color: var(--text-main); font-size: 13px; }
-        input { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; background-color: var(--accent-bg); color: #1e293b; }
-        .btn-add { width: 100%; padding: 12px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: bold; margin-bottom: 20px; }
+        input { 
+            width: 100%; 
+            padding: 10px; 
+            box-sizing: border-box; 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            font-size: 14px; 
+            background-color: var(--accent-bg); 
+            color: #1e293b; 
+            outline: none;
+        }
+        input:focus {
+            border-color: var(--primary);
+        }
+        .btn-add { 
+            width: 100%; 
+            padding: 12px; 
+            background-color: var(--primary); 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 14px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            margin-bottom: 20px; 
+            transition: background-color 0.2s;
+        }
         .btn-add:hover { background-color: var(--primary-hover); }
         .section { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 2px solid #e2edf5; }
         .section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .calendar-container { margin-bottom: 15px; background: #fafcff; padding: 14px; border-radius: 10px; border: 1px solid var(--border-color); }
-        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .calendar-header button { background: var(--bg-card); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; color: var(--text-main); font-weight: bold; }
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; font-size: 12px; }
-        .weekday { font-weight: bold; color: var(--text-main); padding-bottom: 4px; border-bottom: 1px solid var(--border-color); }
-        .day { padding: 8px 0; border-radius: 6px; cursor: pointer; font-weight: bold; color: #334155; position: relative; border: 1px solid #e2edf5; background: #ffffff; }
+        
+        /* 캘린더 스타일 */
+        .calendar-container { 
+            margin-bottom: 15px; 
+            background: #fafcff; 
+            padding: 16px; 
+            border-radius: 10px; 
+            border: 1px solid var(--border-color); 
+        }
+        .calendar-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 14px; 
+        }
+        .calendar-header h3 {
+            margin: 0;
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--text-main);
+        }
+        .calendar-header button { 
+            background: var(--bg-card); 
+            border: 1px solid var(--border-color); 
+            padding: 4px 10px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 12px; 
+            color: var(--text-main); 
+            font-weight: bold; 
+            transition: background-color 0.2s;
+        }
+        .calendar-header button:hover {
+            background-color: #e6f0f7;
+        }
+        .calendar-grid { 
+            display: grid; 
+            grid-template-columns: repeat(7, 1fr); 
+            gap: 4px; 
+            text-align: center; 
+        }
+        .weekday { 
+            font-size: 12px;
+            font-weight: bold; 
+            color: var(--text-main); 
+            padding-bottom: 6px; 
+        }
+        .day { 
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 13px;
+            font-weight: bold; 
+            color: #334155; 
+            position: relative; 
+            border: 1px solid #e2edf5; 
+            background: #ffffff; 
+            transition: all 0.15s ease;
+        }
         .day:hover { background: #e6f0f7; }
-        .day.today { background: var(--today-bg); color: white; border-color: var(--today-bg); }
-        .day.selected { border: 2px solid var(--primary); box-sizing: border-box; background: #f0f4f8; }
-        .day.has-task::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--primary); border-radius: 50%; }
+        .day.today { 
+            background: var(--today-bg); 
+            color: white; 
+            border-color: var(--today-bg); 
+        }
+        .day.selected { 
+            border: 2px solid var(--primary); 
+            box-sizing: border-box; 
+            background: #f0f4f8; 
+        }
+        .day.today.selected {
+            background: var(--today-bg);
+            border: 2px solid var(--primary-hover);
+            color: white;
+        }
+        .day.has-task::after { 
+            content: ''; 
+            position: absolute; 
+            bottom: 3px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 4px; 
+            height: 4px; 
+            background: var(--primary); 
+            border-radius: 50%; 
+        }
+        .day.today.has-task::after {
+            background: #ffffff;
+        }
+        
         ul { list-style: none; padding: 0; margin: 0; }
-        li { background: var(--bg-card); padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e2edf5; }
+        li { 
+            background: var(--bg-card); 
+            padding: 12px; 
+            border-radius: 8px; 
+            margin-bottom: 8px; 
+            font-size: 14px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border: 1px solid #e2edf5; 
+        }
         .today-box { border-left: 5px solid var(--primary); background: #f4f8fb; }
         .today-text { font-weight: bold; color: #2a4365; }
-        .btn-check { background-color: var(--primary); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px; }
-        .no-task { color: var(--text-muted); font-size: 13px; text-align: center; padding: 20px 0; background: var(--accent-bg); border-radius: 8px; border: 1px dashed var(--border-color); }
+        .btn-check { 
+            background-color: var(--primary); 
+            color: white; 
+            border: none; 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: 12px; 
+            transition: background-color 0.2s;
+        }
+        .btn-check:hover { background-color: var(--primary-hover); }
+        .no-task { 
+            color: var(--text-muted); 
+            font-size: 13px; 
+            text-align: center; 
+            padding: 20px 0; 
+            background: var(--accent-bg); 
+            border-radius: 8px; 
+            border: 1px dashed var(--border-color); 
+        }
         .all-box { border-left: 5px solid var(--text-muted); }
         .routine-period { font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px; }
         .btn-delete { background: none; border: none; color: #e06d6d; cursor: pointer; font-size: 12px; font-weight: bold; padding: 4px; }
+
+        /* 접기/펼치기 토글 전용 스타일 추가 */
+        .toggle-header {
+            cursor: pointer;
+            user-select: none;
+            justify-content: space-between;
+            margin-bottom: 0;
+            padding: 6px 0;
+            border-radius: 6px;
+            transition: background-color 0.15s;
+        }
+        .toggle-header:hover {
+            opacity: 0.8;
+        }
+        .toggle-icon {
+            font-size: 12px;
+            transition: transform 0.25s ease;
+            color: var(--text-muted);
+        }
+        .collapsible-wrapper {
+            max-height: 1000px;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out, opacity 0.25s ease-in-out, margin-top 0.25s ease;
+            opacity: 1;
+            margin-top: 14px;
+        }
+        .collapsible-wrapper.collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin-top: 0;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -81,8 +286,13 @@
         <ul id="todayContainer"></ul>
     </div>
     <div class="section">
-        <h2>📋 전체 루틴 목록</h2>
-        <ul id="allContainer"></ul>
+        <h2 class="toggle-header" onclick="toggleAllRoutines()">
+            <span>📋 전체 루틴 목록</span>
+            <span class="toggle-icon" id="toggleIcon">▲</span>
+        </h2>
+        <div class="collapsible-wrapper" id="allRoutinesWrapper">
+            <ul id="allContainer"></ul>
+        </div>
     </div>
 </div>
 <script>
@@ -97,6 +307,20 @@
         if(el) el.value = todayStr;
         displayRoutines();
     };
+
+    function toggleAllRoutines() {
+        var wrapper = document.getElementById('allRoutinesWrapper');
+        var icon = document.getElementById('toggleIcon');
+        if (!wrapper || !icon) return;
+
+        if (wrapper.classList.contains('collapsed')) {
+            wrapper.classList.remove('collapsed');
+            icon.innerText = '▲';
+        } else {
+            wrapper.classList.add('collapsed');
+            icon.innerText = '▼';
+        }
+    }
 
     function parseAiCycle(text) {
         var cleanText = (text || '').replace(/\s+/g, ''); 
@@ -144,59 +368,127 @@
         var todaySectionTitle = document.getElementById('todaySectionTitle');
         if(!todayContainer || !allContainer) return;
         todayContainer.innerHTML = ""; allContainer.innerHTML = "";
+        
         var isSelectedToday = selectedDate.toDateString() === new Date().toDateString();
         if(todaySectionTitle) todaySectionTitle.innerText = isSelectedToday ? "🔹 오늘 해야 할 일" : "🔹 " + (selectedDate.getMonth()+1) + "월 " + selectedDate.getDate() + "일의 할 일";
+        
         var taskCount = 0;
         for(var i=0; i<routines.length; i++) {
             var routine = routines[i];
-            var liAll = document.createElement('li'); liAll.className = 'all-box';
+            
+            var liAll = document.createElement('li'); 
+            liAll.className = 'all-box';
             liAll.innerHTML = '<div><strong>' + routine.name + '</strong><span class="routine-period">🔁 ' + routine.cycleText + ' (시작일: ' + routine.startDate + ')</span></div><button class="btn-delete" onclick="deleteRoutine(' + i + ')">❌ 삭제</button>';
             allContainer.appendChild(liAll);
+            
             if (isRoutineOnDate(routine, selectedDate)) {
                 taskCount++;
-                var liToday = document.createElement('li'); liToday.className = 'today-box';
-liToday.innerHTML = '▪️ ' + routine.name + '완료';
-todayContainer.appendChild(liToday);
-}
-}
-if (taskCount === 0 && todayContainer) todayContainer.innerHTML = '🎉 예정된 루틴이 없습니다! 푹 쉬세요.';
-renderCalendar();
-}
-function renderCalendar() {
-var year = currentCalDate.getFullYear(); var month = currentCalDate.getMonth();
-var titleEl = document.getElementById('calendarTitle'); if(titleEl) titleEl.innerText = year + "년 " + (month + 1) + "월";
-var grid = document.getElementById('calendarGrid'); if(!grid) return;
-grid.innerHTML = '';
-var weeks = ['일','월','화','수','목','금','토'];
-for(var i=0; i<weeks.length; i++) { grid.innerHTML += '' + weeks[i] + ''; }
-var firstDay = new Date(year, month, 1).getDay(); var lastDate = new Date(year, month + 1, 0).getDate();
-for (var i = 0; i < firstDay; i++) grid.innerHTML += '';
-for (var d = 1; d <= lastDate; d++) {
-var thisDate = new Date(year, month, d); thisDate.setHours(0,0,0,0);
-var isToday = thisDate.toDateString() === new Date().toDateString() ? 'today' : '';
-var isSelected = thisDate.getTime() === selectedDate.getTime() ? 'selected' : '';
-var hasTask = false;
-for(var k=0; k<routines.length; k++) { if(isRoutineOnDate(routines[k], thisDate)) { hasTask = true; break; } }
-var hasTaskClass = hasTask ? 'has-task' : '';
-grid.innerHTML += '' + d + '';
-}
-}
-function clickCalDate(y, m, d) { selectedDate = new Date(y, m, d); selectedDate.setHours(0,0,0,0); displayRoutines(); }
-function changeMonth(dir) { currentCalDate.setMonth(currentCalDate.getMonth() + dir); renderCalendar(); }
-function addRoutine() {
-var nameInput = document.getElementById('routineName');
-var startDateInput = document.getElementById('routineStartDate');
-var aiInput = document.getElementById('aiCycleInput');
-if (!nameInput || !startDateInput || !aiInput) return;
-if (nameInput.value.trim() === "") { alert("루틴 이름을 입력해 주세요!"); return; }
-if (!startDateInput.value) { alert("루틴 시작일을 선택해 주세요!"); return; }
-if (aiInput.value.trim() === "") { alert("반복 주기를 입력해 주세요!"); return; }
-var parsed = parseAiCycle(aiInput.value);
-routines.push({ name: nameInput.value.trim(), cycle: parsed.cycle, cycleText: parsed.text, details: parsed.details, startDate: startDateInput.value });
-localStorage.setItem('routines', JSON.stringify(routines));
-nameInput.value = ""; aiInput.value = "";
-displayRoutines();
-}
-function deleteRoutine(index) { if(confirm("이 루틴을 완전히 삭제하시겠습니까?")) { routines.splice(index, 1); localStorage.setItem('routines', JSON.stringify(routines)); displayRoutines(); } }
-function completeTask(index, button) { alert('👏 완료!'); button.disabled = true; button.innerText = "🎉 완료됨"; button.parentElement.style.opacity = "0.5"; }
-displayRoutines();
+                var liToday = document.createElement('li'); 
+                liToday.className = 'today-box';
+                liToday.innerHTML = '<span class="today-text">▪️ ' + routine.name + '</span><button class="btn-check" onclick="completeTask(' + i + ', this)">완료</button>';
+                todayContainer.appendChild(liToday);
+            }
+        }
+
+        if (taskCount === 0 && todayContainer) {
+            todayContainer.innerHTML = '<div class="no-task">🎉 예정된 루틴이 없습니다! 푹 쉬세요.</div>';
+        }
+        
+        renderCalendar();
+    }
+
+    function renderCalendar() {
+        var year = currentCalDate.getFullYear(); 
+        var month = currentCalDate.getMonth();
+        var titleEl = document.getElementById('calendarTitle'); 
+        if(titleEl) titleEl.innerText = year + "년 " + (month + 1) + "월";
+        
+        var grid = document.getElementById('calendarGrid'); 
+        if(!grid) return;
+        grid.innerHTML = '';
+
+        var weeks = ['일','월','화','수','목','금','토'];
+        for(var i=0; i<weeks.length; i++) { 
+            grid.innerHTML += '<div class="weekday">' + weeks[i] + '</div>'; 
+        }
+
+        var firstDay = new Date(year, month, 1).getDay(); 
+        var lastDate = new Date(year, month + 1, 0).getDate();
+
+        for (var i = 0; i < firstDay; i++) {
+            grid.innerHTML += '<div></div>';
+        }
+
+        for (var d = 1; d <= lastDate; d++) {
+            var thisDate = new Date(year, month, d); 
+            thisDate.setHours(0,0,0,0);
+
+            var isToday = thisDate.toDateString() === new Date().toDateString() ? 'today' : '';
+            var isSelected = thisDate.getTime() === selectedDate.getTime() ? 'selected' : '';
+            
+            var hasTask = false;
+            for(var k=0; k<routines.length; k++) { 
+                if(isRoutineOnDate(routines[k], thisDate)) { 
+                    hasTask = true; 
+                    break; 
+                } 
+            }
+            var hasTaskClass = hasTask ? 'has-task' : '';
+
+            grid.innerHTML += '<div class="day ' + isToday + ' ' + isSelected + ' ' + hasTaskClass + '" onclick="clickCalDate(' + year + ',' + month + ',' + d + ')">' + d + '</div>';
+        }
+    }
+
+    function clickCalDate(y, m, d) { 
+        selectedDate = new Date(y, m, d); 
+        selectedDate.setHours(0,0,0,0); 
+        displayRoutines(); 
+    }
+
+    function changeMonth(dir) { 
+        currentCalDate.setMonth(currentCalDate.getMonth() + dir); 
+        renderCalendar(); 
+    }
+
+    function addRoutine() {
+        var nameInput = document.getElementById('routineName');
+        var startDateInput = document.getElementById('routineStartDate');
+        var aiInput = document.getElementById('aiCycleInput');
+
+        if (!nameInput || !startDateInput || !aiInput) return;
+        if (nameInput.value.trim() === "") { alert("루틴 이름을 입력해 주세요!"); return; }
+        if (!startDateInput.value) { alert("루틴 시작일을 선택해 주세요!"); return; }
+        if (aiInput.value.trim() === "") { alert("반복 주기를 입력해 주세요!"); return; }
+
+        var parsed = parseAiCycle(aiInput.value);
+        routines.push({ 
+            name: nameInput.value.trim(), 
+            cycle: parsed.cycle, 
+            cycleText: parsed.text, 
+            details: parsed.details, 
+            startDate: startDateInput.value 
+        });
+
+        localStorage.setItem('routines', JSON.stringify(routines));
+        nameInput.value = ""; 
+        aiInput.value = "";
+        displayRoutines();
+    }
+
+    function deleteRoutine(index) { 
+        if(confirm("이 루틴을 완전히 삭제하시겠습니까?")) { 
+            routines.splice(index, 1); 
+            localStorage.setItem('routines', JSON.stringify(routines)); 
+            displayRoutines(); 
+        } 
+    }
+
+    function completeTask(index, button) { 
+        alert('👏 완료!'); 
+        button.disabled = true; 
+        button.innerText = "🎉 완료됨"; 
+        button.parentElement.style.opacity = "0.5"; 
+    }
+</script>
+</body>
+</html>
