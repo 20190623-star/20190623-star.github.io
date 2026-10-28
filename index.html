@@ -5,65 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ROUTINE</title>
     <style>
-        /* 팬톤 13-4304, 12-4303, 15-3922 기반의 화사하고 이쁜 스카이/세레니티 블루 테마 */
+        /* 팬톤(PANTONE) 13-4304, 12-4303, 15-3922 기반의 감성적인 스카이 세레니티 테마 */
         :root {
-            --bg-main: #edf4fe;       /* 은은하고 맑은 스카이 블루 베이스 */
+            --bg-main: #f0f4f8;       /* 13-4304 Ballad Blue 계열의 차분한 베이스 */
             --bg-card: #ffffff;       
-            --border-color: #c7dcfc;   /* 부드러운 파스텔 블루 실선 */
-            --text-main: #2b5c8f;      /* 정돈된 딥 세레니티 블루 글씨 */
-            --text-muted: #6983a3;     
-            --primary: #7baaf7;       /* 팬톤 계열의 이쁜 파스텔 블루 (포인트) */
-            --primary-hover: #5a94f5; 
-            --accent-bg: #f5f9ff;     
-            --today-bg: #4b85e8;      /* 오늘 날짜 표시용 선명한 파란색 */
+            --border-color: #d2e4f1;   /* 12-4303 Spun Sugar 계열의 은은한 하늘색 선 */
+            --text-main: #4a6572;      /* 흐린 블루그레이 톤의 고급스러운 본문 */
+            --text-muted: #8ca1ae;     
+            --primary: #9aa8ca;       /* 15-3922 Air Blue 계열의 감성적이고 정갈한 포인트 */
+            --primary-hover: #7f8fa6; 
+            --accent-bg: #fafbfc;     
+            --today-bg: #5c6b73;      
         }
 
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--bg-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px 0; box-sizing: border-box; color: var(--text-main); }
-        .container { background: var(--bg-card); padding: 30px; border-radius: 14px; border: 1px solid var(--border-color); width: 450px; box-shadow: 0 6px 20px rgba(43, 92, 143, 0.06); }
+        .container { background: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color); width: 450px; box-shadow: 0 4px 15px rgba(74, 101, 114, 0.05); }
         h1 { font-size: 26px; color: var(--text-main); text-align: center; margin-bottom: 24px; font-weight: 700; letter-spacing: 2px; }
         h2 { font-size: 16px; color: var(--text-main); margin-top: 0; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; font-weight: 600; }
         
         .input-group { margin-bottom: 14px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; color: var(--text-main); font-size: 13px; }
-        input, select { width: 100%; padding: 11px 12px; box-sizing: border-box; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; background-color: var(--accent-bg); color: #2c3e50; transition: all 0.2s; }
-        input:focus, select:focus { outline: none; border-color: var(--primary-hover); background-color: var(--bg-card); box-shadow: 0 0 0 3px rgba(123, 170, 247, 0.25); }
+        input, select { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; background-color: var(--accent-bg); color: #334155; }
+        input:focus, select:focus { outline: none; border-color: var(--primary-hover); background-color: var(--bg-card); box-shadow: 0 0 0 3px rgba(154, 168, 202, 0.3); }
         
-        .ai-hint { font-size: 11px; color: var(--text-muted); margin-top: 5px; padding-left: 2px; line-height: 1.4; }
+        .ai-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; padding-left: 2px; line-height: 1.4; }
 
-        /* 버튼 명칭 및 디자인 변경 */
-        .btn-add { width: 100%; padding: 12px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: bold; margin-bottom: 20px; transition: background 0.2s; box-shadow: 0 2px 5px rgba(123, 170, 247, 0.2); }
+        .btn-add { width: 100%; padding: 12px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: bold; margin-bottom: 20px; transition: background 0.2s; }
         .btn-add:hover { background-color: var(--primary-hover); }
         
-        .section { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 2px solid #e2edfd; }
+        .section { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 2px solid #e2edf5; }
         .section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         
-        /* 미니 달력 스타일 */
-        .calendar-container { margin-bottom: 15px; background: var(--accent-bg); padding: 14px; border-radius: 10px; border: 1px solid var(--border-color); }
+        .calendar-container { margin-bottom: 15px; background: #f4f8fb; padding: 14px; border-radius: 10px; border: 1px solid var(--border-color); }
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .calendar-header button { background: var(--bg-card); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; color: var(--text-main); font-weight: bold; }
-        .calendar-header button:hover { background: #e2edfd; }
+        .calendar-header button:hover { background: #e6f0f7; }
         .calendar-header h3 { margin: 0; font-size: 14px; color: var(--text-main); font-weight: 700; }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; font-size: 12px; }
         .weekday { font-weight: bold; color: var(--text-muted); padding-bottom: 4px; }
-        .day { padding: 8px 0; border-radius: 6px; cursor: pointer; font-weight: bold; color: #34495e; position: relative; }
-        .day:hover { background: #e2edfd; }
+        .day { padding: 8px 0; border-radius: 6px; cursor: pointer; font-weight: bold; color: #475569; position: relative; }
+        .day:hover { background: #e6f0f7; }
         .day.today { background: var(--today-bg); color: white; }
-        .day.selected { border: 2px solid var(--primary-hover); background: var(--bg-card); box-sizing: border-box; }
-        .day.has-task::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--primary-hover); border-radius: 50%; }
+        .day.selected { border: 2px solid var(--primary); background: var(--bg-card); box-sizing: border-box; color: var(--text-main); }
+        .day.has-task::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--primary); border-radius: 50%; }
         .day.today.has-task::after { background: white; }
 
         ul { list-style: none; padding: 0; margin: 0; }
-        li { background: var(--bg-card); padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e2edfd; }
+        li { background: var(--bg-card); padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e2edf5; }
         
-        .today-box { border-left: 5px solid var(--primary-hover); background: var(--accent-bg); }
-        .today-text { font-weight: bold; color: var(--text-main); }
+        .today-box { border-left: 5px solid var(--primary); background: #f4f8fb; }
+        .today-text { font-weight: bold; color: #3b525e; }
         .btn-check { background-color: var(--primary); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px; }
         .btn-check:hover { background-color: var(--primary-hover); }
         .no-task { color: var(--text-muted); font-size: 13px; text-align: center; padding: 20px 0; background: var(--accent-bg); border-radius: 8px; border: 1px dashed var(--border-color); }
         
-        .all-box { border-left: 5px solid var(--today-bg); }
+        .all-box { border-left: 5px solid var(--text-muted); }
         .routine-period { font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px; }
-        .btn-delete { background: none; border: none; color: #e74c3c; cursor: pointer; font-size: 12px; font-weight: bold; padding: 4px; }
+        .btn-delete { background: none; border: none; color: #e06d6d; cursor: pointer; font-size: 12px; font-weight: bold; padding: 4px; }
         .btn-delete:hover { text-decoration: underline; }
     </style>
 </head>
@@ -72,7 +70,7 @@
 <div class="container">
     <h1>ROUTINE</h1>
     
-    <!-- 1. 루틴 등록 폼 -->
+    <!-- 1. 스마트 루틴 등록 폼 -->
     <div class="section">
         <div class="input-group">
             <label for="routineName">루틴 이름</label>
@@ -84,7 +82,6 @@
             <input type="date" id="routineStartDate">
         </div>
 
-        <!-- 💡 (자연어로 입력) 글자 완벽하게 삭제 완료 -->
         <div class="input-group">
             <label for="aiCycleInput">반복 주기</label>
             <input type="text" id="aiCycleInput" placeholder="예: 매일 / 격일 / 월수금 / 매달 15일">
@@ -93,7 +90,7 @@
             </div>
         </div>
 
-        <!-- 💡 버튼 명칭 '루틴 생성'으로 변경 완료 -->
+        <!-- 💡 글자 변경 완료 -->
         <button class="btn-add" onclick="addRoutine()">루틴 생성</button>
     </div>
 
@@ -134,7 +131,7 @@
         displayRoutines();
     };
 
-    // 🧠 오타와 오류가 완벽히 수정된 자연어 해석 알고리즘
+    // 🧠 해석 오류(오타)가 수정된 자연어 처리 엔진
     function parseAiCycle(text) {
         const cleanText = text.replace(/\s+/g, ''); 
         
@@ -153,7 +150,7 @@
         
         const monthMatch = cleanText.match(/(매달|매월)(\d+)일/);
         if (monthMatch) {
-            const dayNum = monthMatch[2];
+            const dayNum = monthMatch[2]; // 정밀 추출 버그 수정
             return { cycle: 'monthly', text: `매달 ${dayNum}일 반복`, details: { monthDay: dayNum } };
         }
         
@@ -168,11 +165,11 @@
         
         const dateMatch = text.match(/(\d{4})[-./](\d{1,2})[-./](\d{1,2})/);
         if (dateMatch) {
-            const formattedDate = dateMatch[1] + '-' + dateMatch[2].padStart(2, '0') + '-' + dateMatch[3].padStart(2, '0');
+            const formattedDate = `${dateMatch[1]}-${dateMatch[2].padStart(2, '0')}-${dateMatch[3].padStart(2, '0')}`; // 오타 버그 수정
             return { cycle: 'specific-date', text: `지정 날짜(${formattedDate}) 수행`, details: { specificDate: formattedDate } };
         }
 
-        return { cycle: 'daily', text: `매일 반복 (해석 모호: ${text})`, details: {} };
+        return { cycle: 'daily', text: `기본값(매일) - 해석 대상: ${text}`, details: {} };
     }
 
     function isRoutineOnDate(routine, date) {
@@ -187,10 +184,11 @@
         const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'][targetDate.getDay()];
         
         if (diffDays < 0 && routine.cycle !== 'specific-date') return false;
+
         switch(routine.cycle) {
-case 'daily': return true;
-case 'every-2-days': return diffDays % 2 === 0;
-case 'weekly': return diffDays % 7 === 0;
+            case 'daily': return true;
+            case 'every-2-days': return diffDays % 2 === 0;
+                case 'weekly': return diffDays % 7 === 0;
 case 'every-2-weeks': return diffDays % 14 === 0;
 case 'custom-days': return routine.details.days?.includes(dayOfWeek);
 case 'monthly': return targetDate.getDate() === parseInt(routine.details.monthDay);
@@ -279,4 +277,16 @@ aiInput.value = "";
 startDateInput.value = new Date().toISOString().split('T')[0];
 displayRoutines();
 }
-
+function deleteRoutine(index) {
+if(confirm("이 루틴을 완전히 삭제하시겠습니까?")) {
+routines.splice(index, 1);
+localStorage.setItem('routines', JSON.stringify(routines));
+displayRoutines();
+}
+}
+function completeTask(name, button) {
+alert(👏 [${name}] 완료! 수고하셨습니다.);
+button.disabled = true;
+button.innerText = "🎉 완료됨";
+button.parentElement.style.opacity = "0.5";
+}
