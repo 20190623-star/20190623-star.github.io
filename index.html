@@ -5,66 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ROUTINE</title>
     <style>
-        /* 선명하고 이쁜 하늘색(Sky Blue) 뮤트 스타일 */
+        /* 시원하고 화사한 파스텔 하늘색 테마 디자인 */
         :root {
-            --bg-main: #f0f7ff;       /* 연한 파스텔 하늘색 바탕 */
-            --bg-card: #ffffff;       /* 깔끔한 화이트 카드 */
-            --border-color: #bae6fd;   /* 부드러운 하늘색 실선 */
-            --text-main: #0c4a6e;      /* 깊은 바다색 메인 글씨 */
-            --text-muted: #64748b;    /* 차분한 그레이 글씨 */
-            --primary: #38bdf8;       /* 산뜻한 하늘색 포인트 */
-            --primary-hover: #0ea5e9; /* 선명한 파란색 */
-            --accent-bg: #f8fafc;     /* 맑은 화이트그레이 배경 */
-            --today-bg: #0284c7;      /* 오늘 날짜 진한 하늘색 */
+            --bg-main: #f0f7ff;       /* 부드러운 파스텔 하늘색 배경 */
+            --bg-card: #ffffff;       /* 흰색 카드 상자 */
+            --border-color: #bae6fd;   /* 밝은 하늘색 테두리 */
+            --text-main: #0369a1;      /* 진한 파란색 본문 글씨 */
+            --text-muted: #64748b;     /* 차분한 회색 설명 글씨 */
+            --primary: #38bdf8;       /* 산뜻한 스카이블루 (포인트) */
+            --primary-hover: #0ea5e9; /* 선명한 하늘색 */
+            --accent-bg: #f8fafc;     /* 아주 연한 회청색 배경 */
+            --today-bg: #0284c7;      /* 오늘 날짜 표시용 딥스카이 */
         }
 
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--bg-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px 0; box-sizing: border-box; color: var(--text-main); }
-        .container { background: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color); width: 450px; box-shadow: 0 4px 20px rgba(14, 165, 233, 0.1); }
-        h1 { font-size: 26px; color: var(--text-main); text-align: center; margin-bottom: 24px; font-weight: 700; letter-spacing: 3px; }
-        h2 { font-size: 15px; color: var(--text-main); margin-top: 0; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; font-weight: 600; }
+        .container { background: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color); width: 450px; box-shadow: 0 4px 15px rgba(3, 105, 161, 0.05); }
+        h1 { font-size: 26px; color: var(--text-main); text-align: center; margin-bottom: 24px; font-weight: 700; letter-spacing: 2px; }
+        h2 { font-size: 16px; color: var(--text-main); margin-top: 0; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; font-weight: 600; }
         
-        .input-group { margin-bottom: 16px; }
-        label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--text-main); font-size: 13px; }
-        input, select { width: 100%; padding: 11px 12px; box-sizing: border-box; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; margin-bottom: 5px; background-color: var(--accent-bg); color: var(--text-main); transition: all 0.2s; }
-        input:focus, select:focus { outline: none; border-color: var(--primary); background-color: var(--bg-card); box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); }
+        .input-group { margin-bottom: 14px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: var(--text-main); font-size: 13px; }
+        input, select { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; background-color: var(--accent-bg); color: #334155; }
+        input:focus, select:focus { outline: none; border-color: var(--primary-hover); background-color: var(--bg-card); box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); }
         
-        .btn-add { width: 100%; padding: 12px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: 600; margin-bottom: 20px; transition: background-color 0.2s; }
+        .btn-add { width: 100%; padding: 12px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: bold; margin-bottom: 20px; transition: background 0.2s; }
         .btn-add:hover { background-color: var(--primary-hover); }
         
-        .section { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
+        .section { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 2px solid #e0f2fe; }
         .section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         
-        /* 미니 달력 레이아웃 선명화 */
-        .calendar-container { margin-bottom: 15px; background: #e0f2fe; padding: 14px; border-radius: 10px; border: 1px solid var(--border-color); }
+        /* 미니 달력 레이아웃 */
+        .calendar-container { margin-bottom: 15px; background: #f0f9ff; padding: 14px; border-radius: 10px; border: 1px solid var(--border-color); }
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .calendar-header button { background: var(--bg-card); border: 1px solid var(--border-color); padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; color: var(--text-main); font-weight: 600; }
-        .calendar-header button:hover { background: #f0f9ff; }
+        .calendar-header button { background: var(--bg-card); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; color: var(--text-main); font-weight: bold; }
+        .calendar-header button:hover { background: #e0f2fe; }
         .calendar-header h3 { margin: 0; font-size: 14px; color: var(--text-main); font-weight: 700; }
-        
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; font-size: 12px; }
-        .weekday { font-weight: 600; color: var(--text-muted); padding-bottom: 4px; }
-        .day { padding: 8px 0; border-radius: 6px; cursor: pointer; font-weight: 700; color: var(--text-main); position: relative; border: 1px solid transparent; }
-        .day:hover { background: #bae6fd; }
-        
+        .weekday { font-weight: bold; color: var(--text-muted); padding-bottom: 4px; }
+        .day { padding: 8px 0; border-radius: 6px; cursor: pointer; font-weight: bold; color: #334155; position: relative; }
+        .day:hover { background: #e0f2fe; }
         .day.today { background: var(--today-bg); color: white; }
-        .day.selected { border: 2px solid var(--text-main); background: var(--bg-card); color: var(--text-main); box-sizing: border-box; }
-        .day.today.selected { background: var(--today-bg); color: white; border: 2px solid var(--text-main); }
-        
+        .day.selected { border: 2px solid var(--primary-hover); background: var(--bg-card); box-sizing: border-box; }
         .day.has-task::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--primary-hover); border-radius: 50%; }
         .day.today.has-task::after { background: white; }
 
         ul { list-style: none; padding: 0; margin: 0; }
-        li { background: var(--bg-card); padding: 14px; border-radius: 8px; margin-bottom: 8px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); }
+        li { background: var(--bg-card); padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e0f2fe; }
         
-        .today-box { border-left: 4px solid var(--primary-hover); background: #f0f9ff; }
-        .today-text { font-weight: 600; color: #0369a1; }
-        .btn-check { background-color: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; transition: all 0.2s; }
-        .btn-check:hover { background: #e0f2fe; }
+        .today-box { border-left: 5px solid var(--primary-hover); background: #f0f9ff; }
+        .today-text { font-weight: bold; color: #0369a1; }
+        .btn-check { background-color: var(--primary); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px; }
+        .btn-check:hover { background-color: var(--primary-hover); }
         .no-task { color: var(--text-muted); font-size: 13px; text-align: center; padding: 20px 0; background: var(--accent-bg); border-radius: 8px; border: 1px dashed var(--border-color); }
         
-        .all-box { border-left: 4px solid var(--text-muted); }
+        .all-box { border-left: 5px solid #0284c7; }
         .routine-period { font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px; }
-        .btn-delete { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 12px; font-weight: 600; padding: 4px; }
+        .btn-delete { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 12px; font-weight: bold; padding: 4px; }
         .btn-delete:hover { text-decoration: underline; }
     </style>
 </head>
@@ -80,9 +76,9 @@
             <input type="text" id="routineName" placeholder="예: 분리수거, 영양제 챙겨먹기">
         </div>
         
-        <!-- [신규] 모든 루틴의 시작 날짜를 명확하게 설정할 수 있는 칸 -->
+        <!-- 💡 요청 기능: 모든 루틴의 시작 날짜를 사용자가 직접 설정 가능 -->
         <div class="input-group">
-            <label for="routineStartDate">루틴 시작 날짜 (주기 계산의 기준일)</label>
+            <label for="routineStartDate">루틴 시작일 지정</label>
             <input type="date" id="routineStartDate">
         </div>
 
@@ -99,19 +95,21 @@
             </select>
         </div>
 
-        <!-- 동적 조건 입력창 영역 (지정 요일) -->
+        <!-- 지정 요일 선택칸 -->
         <div class="input-group" id="inputDaysBox" style="display:none;">
-            <label for="routineDays">요일 선택 (쉼표 구분)</label>
+            <label for="routineDays">요일 입력 (쉼표 구분)</label>
             <input type="text" id="routineDays" placeholder="예: 월, 수, 금">
         </div>
-        <!-- 동적 조건 입력창 영역 (매달 특정일) -->
+        
+        <!-- 매달 특정일 입력칸 -->
         <div class="input-group" id="inputMonthDayBox" style="display:none;">
-            <label for="routineMonthDay">매달 며칠날 할까요? (숫자만 입력)</label>
+            <label for="routineMonthDay">매달 몇 일에 실행할까요? (숫자만)</label>
             <input type="number" id="routineMonthDay" min="1" max="31" placeholder="예: 15">
         </div>
-        <!-- 동적 조건 입력창 영역 (특정 지정 날짜) -->
+        
+        <!-- 특정 지정 날짜 선택칸 -->
         <div class="input-group" id="inputDateBox" style="display:none;">
-            <label for="routineSpecificDate">원하는 단일 날짜 지정</label>
+            <label for="routineSpecificDate">실행할 목표 날짜 선택</label>
             <input type="date" id="routineSpecificDate">
         </div>
 
@@ -132,7 +130,7 @@
 
     <!-- 3. 선택한 날짜의 할 일 목록 -->
     <div class="section">
-        <h2 id="todaySectionTitle">📋 오늘 해야 할 일</h2>
+        <h2 id="todaySectionTitle">🔹 오늘 해야 할 일</h2>
         <ul id="todayContainer"></ul>
     </div>
 
@@ -149,10 +147,9 @@
     let selectedDate = new Date();
     selectedDate.setHours(0,0,0,0);
 
-    // 페이지 로드 시 '루틴 시작 날짜'의 기본값을 '오늘'로 자동 세팅해 줍니다.
+    // 기본 시작일을 오늘 날짜로 자동 세팅해주는 초기화 로직
     window.onload = function() {
-        const tzOffset = (new Date()).getTimezoneOffset() * 60000;
-        const todayStr = (new Date(Date.now() - tzOffset)).toISOString().split('T')[0];
+        const todayStr = new Date().toISOString().split('T')[0];
         document.getElementById('routineStartDate').value = todayStr;
         displayRoutines();
     };
@@ -175,17 +172,17 @@
         const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
         const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'][targetDate.getDay()];
         
-        // 시작 날짜 이전에는 루틴이 나타나지 않음 (단, 단일 지정 날짜 예외)
         if (diffDays < 0 && routine.cycle !== 'specific-date') return false;
+
         switch(routine.cycle) {
-case 'daily': return true;
-case 'every-2-days': return diffDays % 2 === 0;
-case 'weekly': return diffDays % 7 === 0;
-case 'every-2-weeks': return diffDays % 14 === 0;
-case 'custom-days': return routine.details.days?.includes(dayOfWeek);
-case 'monthly': return targetDate.getDate() === parseInt(routine.details.monthDay);
-case 'specific-date':
-if (!routine.details.specificDate) return false;
+            case 'daily': return true;
+            case 'every-2-days': return diffDays % 2 === 0;
+            case 'weekly': return diffDays % 7 === 0;
+            case 'every-2-weeks': return diffDays % 14 === 0;
+            case 'custom-days': return routine.details.days?.includes(dayOfWeek);
+            case 'monthly': return targetDate.getDate() === parseInt(routine.details.monthDay);
+            case 'specific-date': 
+                if (!routine.details.specificDate) return false;
 const sDate = new Date(routine.details.specificDate);
 sDate.setHours(0,0,0,0);
 return targetDate.getTime() === sDate.getTime();
@@ -199,7 +196,7 @@ const todaySectionTitle = document.getElementById('todaySectionTitle');
 todayContainer.innerHTML = "";
 allContainer.innerHTML = "";
 const isSelectedToday = selectedDate.toDateString() === new Date().toDateString();
-todaySectionTitle.innerHTML = isSelectedToday ? "📋 오늘 해야 할 일" : 📋 ${selectedDate.getMonth()+1}월 ${selectedDate.getDate()}일의 할 일;
+todaySectionTitle.innerHTML = isSelectedToday ? "🔹 오늘 해야 할 일" : 🔹 ${selectedDate.getMonth()+1}월 ${selectedDate.getDate()}일의 할 일;
 let taskCount = 0;
 routines.forEach((routine, index) => {
 const liAll = document.createElement('li');
@@ -229,4 +226,76 @@ grid.innerHTML = '';
 const firstDay = new Date(year, month, 1).getDay();
 const lastDate = new Date(year, month + 1, 0).getDate();
 for (let i = 0; i < firstDay; i++) grid.innerHTML += <div></div>;
-
+for (let d = 1; d <= lastDate; d++) {
+const thisDate = new Date(year, month, d);
+thisDate.setHours(0,0,0,0);
+const isToday = thisDate.toDateString() === new Date().toDateString() ? 'today' : '';
+const isSelected = thisDate.getTime() === selectedDate.getTime() ? 'selected' : '';
+const hasTask = routines.some(r => isRoutineOnDate(r, thisDate)) ? 'has-task' : '';
+grid.innerHTML += <div class="day ${isToday} ${isSelected} ${hasTask}" onclick="clickCalDate(${year}, ${month}, ${d})">${d}</div>;
+}
+}
+function clickCalDate(y, m, d) {
+selectedDate = new Date(y, m, d);
+selectedDate.setHours(0,0,0,0);
+displayRoutines();
+}
+function changeMonth(dir) {
+currentCalDate.setMonth(currentCalDate.getMonth() + dir);
+renderCalendar();
+}
+function addRoutine() {
+const nameInput = document.getElementById('routineName');
+const cycleSelect = document.getElementById('routineCycle');
+const startDateInput = document.getElementById('routineStartDate');
+if (nameInput.value.trim() === "") { alert("루틴 이름을 입력해 주세요!"); return; }
+if (!startDateInput.value) { alert("루틴 시작일을 선택해 주세요!"); return; }
+const cycle = cycleSelect.value;
+let details = {};
+let customText = cycleSelect.options[cycleSelect.selectedIndex].text;
+if (cycle === 'custom-days') {
+const daysInput = document.getElementById('routineDays').value;
+if(!daysInput) { alert("요일을 입력해 주세요!"); return; }
+details.days = daysInput.split(',').map(d => d.trim());
+customText = 지정 요일(${daysInput});
+} else if (cycle === 'monthly') {
+const mDay = document.getElementById('routineMonthDay').value;
+if(!mDay) { alert("날짜를 입력해 주세요!"); return; }
+details.monthDay = mDay;
+customText = 매달 ${mDay}일;
+} else if (cycle === 'specific-date') {
+const sDate = document.getElementById('routineSpecificDate').value;
+if(!sDate) { alert("날짜를 선택해 주세요!"); return; }
+details.specificDate = sDate;
+customText = 지정 날짜(${sDate});
+}
+const newRoutine = {
+name: nameInput.value,
+cycle: cycle,
+cycleText: customText,
+details: details,
+startDate: startDateInput.value
+};
+routines.push(newRoutine);
+localStorage.setItem('routines', JSON.stringify(routines));
+nameInput.value = "";
+document.getElementById('routineDays').value = "";
+document.getElementById('routineMonthDay').value = "";
+document.getElementById('routineSpecificDate').value = "";
+// 오늘 날짜로 재설정
+startDateInput.value = new Date().toISOString().split('T')[0];
+displayRoutines();
+}
+function deleteRoutine(index) {
+if(confirm("이 루틴을 완전히 삭제하시겠습니까?")) {
+routines.splice(index, 1);
+localStorage.setItem('routines', JSON.stringify(routines));
+displayRoutines();
+}
+}
+function completeTask(name, button) {
+alert(👏 [${name}] 완료! 수고하셨습니다.);
+button.disabled = true;
+button.innerText = "🎉 완료됨";
+button.parentElement.style.opacity = "0.5";
+}
