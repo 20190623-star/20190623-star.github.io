@@ -5,56 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ROUTINE</title>
     <style>
-        /* 시원하고 화사한 파스텔 하늘색 테마 디자인 */
+        /* 🎨 지정해주신 팬톤(PANTONE) 13-4304, 12-4303, 15-3922 계열 조합 */
         :root {
-            --bg-main: #f0f7ff;       
+            --bg-main: #e2e8f0;       /* PANTONE 13-4304 스네일쉘 느낌의 차분한 블루 그레이 */
             --bg-card: #ffffff;       
-            --border-color: #bae6fd;   
-            --text-main: #0369a1;      
+            --border-color: #cbd5e1;   /* 경계선을 정돈해주는 세련된 그레이 주트 */
+            --text-main: #1e3a8a;      /* 깊이감 있는 네이비 블루 글씨 */
             --text-muted: #64748b;     
-            --primary: #38bdf8;       
-            --primary-hover: #0ea5e9; 
-            --accent-bg: #f8fafc;     
-            --today-bg: #0284c7;      
+            --primary: #60a5fa;       /* PANTONE 15-3922 감성의 산뜻하고 포근한 스카이 블루 (버튼) */
+            --primary-hover: #3b82f6; 
+            --accent-bg: #f0f4f8;     /* PANTONE 12-4303 느낌의 아주 은은하고 투명한 미스티 블루 */
+            --today-bg: #2563eb;      
         }
 
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--bg-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px 0; box-sizing: border-box; color: var(--text-main); }
-        .container { background: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color); width: 450px; box-shadow: 0 4px 15px rgba(3, 105, 161, 0.05); }
+        .container { background: var(--bg-card); padding: 30px; border-radius: 14px; border: 1px solid var(--border-color); width: 450px; box-shadow: 0 10px 25px rgba(100, 116, 139, 0.12); }
         h1 { font-size: 26px; color: var(--text-main); text-align: center; margin-bottom: 24px; font-weight: 700; letter-spacing: 2px; }
         h2 { font-size: 16px; color: var(--text-main); margin-top: 0; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; font-weight: 600; }
         
         .input-group { margin-bottom: 14px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; color: var(--text-main); font-size: 13px; }
-        input, select { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; background-color: var(--accent-bg); color: #334155; }
-        input:focus, select:focus { outline: none; border-color: var(--primary-hover); background-color: var(--bg-card); box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); }
+        input, select { width: 100%; padding: 11px; box-sizing: border-box; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; background-color: var(--accent-bg); color: #334155; transition: all 0.2s; }
+        input:focus, select:focus { outline: none; border-color: var(--primary); background-color: var(--bg-card); box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2); }
         
-        .ai-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; padding-left: 2px; line-height: 1.4; }
+        .ai-hint { font-size: 11px; color: var(--text-muted); margin-top: 5px; padding-left: 2px; line-height: 1.4; }
 
         .btn-add { width: 100%; padding: 12px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: bold; margin-bottom: 20px; transition: background 0.2s; }
         .btn-add:hover { background-color: var(--primary-hover); }
         
-        .section { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 2px solid #e0f2fe; }
+        .section { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 2px solid #e2e8f0; }
         .section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         
-        .calendar-container { margin-bottom: 15px; background: #f0f9ff; padding: 14px; border-radius: 10px; border: 1px solid var(--border-color); }
+        .calendar-container { margin-bottom: 15px; background: var(--accent-bg); padding: 14px; border-radius: 10px; border: 1px solid var(--border-color); }
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .calendar-header button { background: var(--bg-card); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; color: var(--text-main); font-weight: bold; }
-        .calendar-header button:hover { background: #e0f2fe; }
+        .calendar-header button:hover { background: #e2e8f0; }
         .calendar-header h3 { margin: 0; font-size: 14px; color: var(--text-main); font-weight: 700; }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; font-size: 12px; }
         .weekday { font-weight: bold; color: var(--text-muted); padding-bottom: 4px; }
         .day { padding: 8px 0; border-radius: 6px; cursor: pointer; font-weight: bold; color: #334155; position: relative; }
-        .day:hover { background: #e0f2fe; }
+        .day:hover { background: #e2e8f0; }
         .day.today { background: var(--today-bg); color: white; }
         .day.selected { border: 2px solid var(--primary-hover); background: var(--bg-card); box-sizing: border-box; }
         .day.has-task::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--primary-hover); border-radius: 50%; }
         .day.today.has-task::after { background: white; }
 
         ul { list-style: none; padding: 0; margin: 0; }
-        li { background: var(--bg-card); padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e0f2fe; }
+        li { background: var(--bg-card); padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e2e8f0; }
         
-        .today-box { border-left: 5px solid var(--primary-hover); background: #f0f9ff; }
-        .today-text { font-weight: bold; color: #0369a1; }
+        .today-box { border-left: 5px solid var(--primary-hover); background: #f0f4f8; }
+        .today-text { font-weight: bold; color: #1e3a8a; }
         .btn-check { background-color: var(--primary); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px; }
         .btn-check:hover { background-color: var(--primary-hover); }
         .no-task { color: var(--text-muted); font-size: 13px; text-align: center; padding: 20px 0; background: var(--accent-bg); border-radius: 8px; border: 1px dashed var(--border-color); }
@@ -70,7 +70,7 @@
 <div class="container">
     <h1>ROUTINE</h1>
     
-    <!-- 1. 스마트 루틴 등록 폼 -->
+    <!-- 스마트 루틴 등록 폼 -->
     <div class="section">
         <div class="input-group">
             <label for="routineName">루틴 이름</label>
@@ -82,8 +82,9 @@
             <input type="date" id="routineStartDate">
         </div>
 
+        <!-- 📝 괄호 정보 문구가 깔끔하게 수정되었습니다 -->
         <div class="input-group">
-            <label for="aiCycleInput">반복 주기 (자연어로 입력)</label>
+            <label for="aiCycleInput">반복 주기</label>
             <input type="text" id="aiCycleInput" placeholder="예: 매일 / 격일 / 월수금 / 매달 15일">
             <div class="ai-hint">
                 💡 <b>입력 예시:</b> 매일, 격일, 매주, 월화수, 매달 25일, 2026-11-05
@@ -93,7 +94,7 @@
         <button class="btn-add" onclick="addRoutine()">스마트 루틴 등록</button>
     </div>
 
-    <!-- 2. 미니 달력 영역 -->
+    <!-- 미니 달력 영역 -->
     <div class="section">
         <div class="calendar-container">
             <div class="calendar-header">
@@ -105,13 +106,13 @@
         </div>
     </div>
 
-    <!-- 3. 선택한 날짜의 할 일 목록 -->
+    <!-- 선택한 날짜의 할 일 목록 -->
     <div class="section">
         <h2 id="todaySectionTitle">🔹 오늘 해야 할 일</h2>
         <ul id="todayContainer"></ul>
     </div>
 
-    <!-- 4. 등록된 전체 루틴 관리 목록 -->
+    <!-- 등록된 전체 루틴 관리 목록 -->
     <div class="section">
         <h2>📋 전체 루틴 목록</h2>
         <ul id="allContainer"></ul>
@@ -130,7 +131,6 @@
         displayRoutines();
     };
 
-    // 사용자의 입력 문장을 해석하는 자연어 처리 함수
     function parseAiCycle(text) {
         const cleanText = text.replace(/\s+/g, ''); 
         
@@ -168,7 +168,7 @@
             return { cycle: 'specific-date', text: `지정 날짜(${formattedDate}) 수행`, details: { specificDate: formattedDate } };
         }
 
-        return { cycle: 'daily', text: `해석 불가 기본값(매일) - 입력: ${text}`, details: {} };
+        return { cycle: 'daily', text: `매일 반복 (해석 기반 기본값) - 입력: ${text}`, details: {} };
     }
 
     function isRoutineOnDate(routine, date) {
@@ -187,10 +187,10 @@
         switch(routine.cycle) {
             case 'daily': return true;
             case 'every-2-days': return diffDays % 2 === 0;
-            case 'weekly': return diffDays % 7 === 0;
-            case 'every-2-weeks': return diffDays % 14 === 0;
-            case 'custom-days': return routine.details.days?.includes(dayOfWeek);
-                case 'monthly': return targetDate.getDate() === parseInt(routine.details.monthDay);
+                case 'weekly': return diffDays % 7 === 0;
+case 'every-2-weeks': return diffDays % 14 === 0;
+case 'custom-days': return routine.details.days?.includes(dayOfWeek);
+case 'monthly': return targetDate.getDate() === parseInt(routine.details.monthDay);
 case 'specific-date':
 if (!routine.details.specificDate) return false;
 const sDate = new Date(routine.details.specificDate);
@@ -249,43 +249,4 @@ function clickCalDate(y, m, d) {
 selectedDate = new Date(y, m, d);
 selectedDate.setHours(0,0,0,0);
 displayRoutines();
-}
-function changeMonth(dir) {
-currentCalDate.setMonth(currentCalDate.getMonth() + dir);
-renderCalendar();
-}
-function addRoutine() {
-const nameInput = document.getElementById('routineName');
-const startDateInput = document.getElementById('routineStartDate');
-const aiInput = document.getElementById('aiCycleInput');
-if (nameInput.value.trim() === "") { alert("루틴 이름을 입력해 주세요!"); return; }
-if (!startDateInput.value) { alert("루틴 시작일을 선택해 주세요!"); return; }
-if (aiInput.value.trim() === "") { alert("반복 주기를 텍스트로 입력해 주세요!"); return; }
-const parsed = parseAiCycle(aiInput.value);
-const newRoutine = {
-name: nameInput.value,
-cycle: parsed.cycle,
-cycleText: parsed.text,
-details: parsed.details,
-startDate: startDateInput.value
-};
-routines.push(newRoutine);
-localStorage.setItem('routines', JSON.stringify(routines));
-nameInput.value = "";
-aiInput.value = "";
-startDateInput.value = new Date().toISOString().split('T')[0];
-displayRoutines();
-}
-function deleteRoutine(index) {
-if(confirm("이 루틴을 완전히 삭제하시겠습니까?")) {
-routines.splice(index, 1);
-localStorage.setItem('routines', JSON.stringify(routines));
-displayRoutines();
-}
-}
-function completeTask(name, button) {
-alert(👏 [${name}] 완료! 수고하셨습니다.);
-button.disabled = true;
-button.innerText = "🎉 완료됨";
-button.parentElement.style.opacity = "0.5";
 }
