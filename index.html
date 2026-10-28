@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ROUTINE</title>
     <style>
+        /* 시원하고 화사한 파스텔 하늘색 테마 디자인 */
         :root {
             --bg-main: #f0f7ff;       
             --bg-card: #ffffff;       
@@ -27,7 +28,6 @@
         input, select { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; background-color: var(--accent-bg); color: #334155; }
         input:focus, select:focus { outline: none; border-color: var(--primary-hover); background-color: var(--bg-card); box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); }
         
-        /* 도움말 스타일 */
         .ai-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; padding-left: 2px; line-height: 1.4; }
 
         .btn-add { width: 100%; padding: 12px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: bold; margin-bottom: 20px; transition: background 0.2s; }
@@ -82,7 +82,6 @@
             <input type="date" id="routineStartDate">
         </div>
 
-        <!-- 💡 단 하나의 똑똑한 주기 입력칸 -->
         <div class="input-group">
             <label for="aiCycleInput">반복 주기 (자연어로 입력)</label>
             <input type="text" id="aiCycleInput" placeholder="예: 매일 / 격일 / 월수금 / 매달 15일">
@@ -131,33 +130,29 @@
         displayRoutines();
     };
 
-    // 🧠 사용자의 입력 문장을 해석하는 가상 AI 엔진 (자연어 처리)
+    // 사용자의 입력 문장을 해석하는 자연어 처리 함수
     function parseAiCycle(text) {
-        const cleanText = text.replace(/\s+/g, ''); // 공백 제거
+        const cleanText = text.replace(/\s+/g, ''); 
         
-        // 1. 매일
         if (cleanText.includes('매일')) {
             return { cycle: 'daily', text: '매일 반복', details: {} };
         }
-        // 2. 격일 / 2일에한번
         if (cleanText.includes('격일') || cleanText.includes('2일')) {
             return { cycle: 'every-2-days', text: '격일 반복', details: {} };
         }
-        // 3. 매주 / 7일
         if (cleanText === '매주' || cleanText.includes('7일')) {
             return { cycle: 'weekly', text: '매주 반복', details: {} };
         }
-        // 4. 격주 / 2주 / 14일
         if (cleanText.includes('격주') || cleanText.includes('2주') || cleanText.includes('14일')) {
             return { cycle: 'every-2-weeks', text: '격주 반복', details: {} };
         }
-        // 5. 매달 특정일 (예: 매달 15일, 매월 20일)
+        
         const monthMatch = cleanText.match(/(매달|매월)(\d+)일/);
         if (monthMatch) {
             const dayNum = monthMatch[2];
             return { cycle: 'monthly', text: `매달 ${dayNum}일 반복`, details: { monthDay: dayNum } };
         }
-        // 6. 요일 감지 (예: 월수금, 화목, 토요일)
+        
         const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
         let detectedDays = [];
         weekdays.forEach(w => {
@@ -166,14 +161,13 @@
         if (detectedDays.length > 0) {
             return { cycle: 'custom-days', text: `지정 요일(${detectedDays.join(', ')}) 반복`, details: { days: detectedDays } };
         }
-        // 7. 특정 날짜 감지 (예: 2026-11-05 등 날짜 패턴)
+        
         const dateMatch = text.match(/(\d{4})[-./](\d{1,2})[-./](\d{1,2})/);
         if (dateMatch) {
             const formattedDate = `${dateMatch[1]}-${dateMatch[2].padStart(2, '0')}-${dateMatch[3].padStart(2, '0')}`;
             return { cycle: 'specific-date', text: `지정 날짜(${formattedDate}) 수행`, details: { specificDate: formattedDate } };
         }
 
-        // 해석 실패 시 기본값 매일 처리
         return { cycle: 'daily', text: `해석 불가 기본값(매일) - 입력: ${text}`, details: {} };
     }
 
@@ -193,10 +187,10 @@
         switch(routine.cycle) {
             case 'daily': return true;
             case 'every-2-days': return diffDays % 2 === 0;
-                case 'weekly': return diffDays % 7 === 0;
-case 'every-2-weeks': return diffDays % 14 === 0;
-case 'custom-days': return routine.details.days?.includes(dayOfWeek);
-case 'monthly': return targetDate.getDate() === parseInt(routine.details.monthDay);
+            case 'weekly': return diffDays % 7 === 0;
+            case 'every-2-weeks': return diffDays % 14 === 0;
+            case 'custom-days': return routine.details.days?.includes(dayOfWeek);
+                case 'monthly': return targetDate.getDate() === parseInt(routine.details.monthDay);
 case 'specific-date':
 if (!routine.details.specificDate) return false;
 const sDate = new Date(routine.details.specificDate);
@@ -267,7 +261,6 @@ const aiInput = document.getElementById('aiCycleInput');
 if (nameInput.value.trim() === "") { alert("루틴 이름을 입력해 주세요!"); return; }
 if (!startDateInput.value) { alert("루틴 시작일을 선택해 주세요!"); return; }
 if (aiInput.value.trim() === "") { alert("반복 주기를 텍스트로 입력해 주세요!"); return; }
-// AI 해석 엔진 구동
 const parsed = parseAiCycle(aiInput.value);
 const newRoutine = {
 name: nameInput.value,
