@@ -99,7 +99,7 @@
             <input type="number" id="routineMonthDay" min="1" max="31" placeholder="예: 15">
         </div>
         <div class="input-group" id="inputDateBox" style="display:none;">
-            <label for="routineSpecificDate">날짜 지정</label>
+            <label for="routineSpecificDate">원하는 날짜 선택</label>
             <input type="date" id="routineSpecificDate">
         </div>
 
@@ -165,6 +165,7 @@
             case 'custom-days': return routine.details.days?.includes(dayOfWeek);
             case 'monthly': return targetDate.getDate() === parseInt(routine.details.monthDay);
             case 'specific-date': 
+                if (!routine.details.specificDate) return false;
                 const sDate = new Date(routine.details.specificDate);
                 sDate.setHours(0,0,0,0);
                 return targetDate.getTime() === sDate.getTime();
@@ -176,7 +177,6 @@
         const todayContainer = document.getElementById('todayContainer');
         const allContainer = document.getElementById('allContainer');
         const todaySectionTitle = document.getElementById('todaySectionTitle');
-        
 todayContainer.innerHTML = "";
 allContainer.innerHTML = "";
 const isSelectedToday = selectedDate.toDateString() === new Date().toDateString();
@@ -185,7 +185,7 @@ let taskCount = 0;
 routines.forEach((routine, index) => {
 const liAll = document.createElement('li');
 liAll.className = 'all-box';
-liAll.innerHTML = <div> <strong>${routine.name}</strong>  <span class="routine-period">🔁 ${routine.cycleText} (시작일: ${routine.startDate})</span> </div> <button class="btn-delete" onclick="deleteRoutine(${index})">❌ 삭제</button>;
+liAll.innerHTML = <div> <strong>${routine.name}</strong>  <span class="routine-period">🔁 ${routine.cycleText}</span> </div> <button class="btn-delete" onclick="deleteRoutine(${index})">❌ 삭제</button>;
 allContainer.appendChild(liAll);
 if (isRoutineOnDate(routine, selectedDate)) {
 taskCount++;
@@ -241,10 +241,12 @@ details.days = daysInput.split(',').map(d => d.trim());
 customText = 지정 요일(${daysInput});
 } else if (cycle === 'monthly') {
 const mDay = document.getElementById('routineMonthDay').value;
+if(!mDay) { alert("날짜를 입력해 주세요!"); return; }
 details.monthDay = mDay;
 customText = 매달 ${mDay}일;
 } else if (cycle === 'specific-date') {
 const sDate = document.getElementById('routineSpecificDate').value;
+if(!sDate) { alert("날짜를 선택해 주세요!"); return; }
 details.specificDate = sDate;
 customText = 지정 날짜(${sDate});
 }
