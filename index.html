@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ROUTINE</title>
     <style>
-        /* 시원하고 화사한 파스텔 하늘색 테마 디자인 */
         :root {
-            --bg-main: #f0f7ff;       /* 부드러운 파스텔 하늘색 배경 */
-            --bg-card: #ffffff;       /* 흰색 카드 상자 */
-            --border-color: #bae6fd;   /* 밝은 하늘색 테두리 */
-            --text-main: #0369a1;      /* 진한 파란색 본문 글씨 */
-            --text-muted: #64748b;     /* 차분한 회색 설명 글씨 */
-            --primary: #38bdf8;       /* 산뜻한 스카이블루 (포인트) */
-            --primary-hover: #0ea5e9; /* 선명한 하늘색 */
-            --accent-bg: #f8fafc;     /* 아주 연한 회청색 배경 */
-            --today-bg: #0284c7;      /* 오늘 날짜 표시용 딥스카이 */
+            --bg-main: #f0f7ff;       
+            --bg-card: #ffffff;       
+            --border-color: #bae6fd;   
+            --text-main: #0369a1;      
+            --text-muted: #64748b;     
+            --primary: #38bdf8;       
+            --primary-hover: #0ea5e9; 
+            --accent-bg: #f8fafc;     
+            --today-bg: #0284c7;      
         }
 
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--bg-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px 0; box-sizing: border-box; color: var(--text-main); }
@@ -28,13 +27,15 @@
         input, select { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; background-color: var(--accent-bg); color: #334155; }
         input:focus, select:focus { outline: none; border-color: var(--primary-hover); background-color: var(--bg-card); box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); }
         
+        /* 도움말 스타일 */
+        .ai-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; padding-left: 2px; line-height: 1.4; }
+
         .btn-add { width: 100%; padding: 12px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: bold; margin-bottom: 20px; transition: background 0.2s; }
         .btn-add:hover { background-color: var(--primary-hover); }
         
         .section { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 2px solid #e0f2fe; }
         .section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         
-        /* 미니 달력 레이아웃 */
         .calendar-container { margin-bottom: 15px; background: #f0f9ff; padding: 14px; border-radius: 10px; border: 1px solid var(--border-color); }
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .calendar-header button { background: var(--bg-card); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; color: var(--text-main); font-weight: bold; }
@@ -69,51 +70,28 @@
 <div class="container">
     <h1>ROUTINE</h1>
     
-    <!-- 1. 루틴 등록 폼 -->
+    <!-- 1. 스마트 루틴 등록 폼 -->
     <div class="section">
         <div class="input-group">
-            <label for="routineName">새 루틴 이름</label>
+            <label for="routineName">루틴 이름</label>
             <input type="text" id="routineName" placeholder="예: 분리수거, 영양제 챙겨먹기">
         </div>
         
-        <!-- 💡 요청 기능: 모든 루틴의 시작 날짜를 사용자가 직접 설정 가능 -->
         <div class="input-group">
-            <label for="routineStartDate">루틴 시작일 지정</label>
+            <label for="routineStartDate">시작일 지정</label>
             <input type="date" id="routineStartDate">
         </div>
 
+        <!-- 💡 단 하나의 똑똑한 주기 입력칸 -->
         <div class="input-group">
-            <label for="routineCycle">반복 주기 종류</label>
-            <select id="routineCycle" onchange="toggleCycleInputs()">
-                <option value="daily">매일</option>
-                <option value="every-2-days">격일 (2일에 한 번)</option>
-                <option value="weekly">매주 (7일 주기)</option>
-                <option value="every-2-weeks">격주 (14일 주기)</option>
-                <option value="custom-days">지정 요일 반복</option>
-                <option value="monthly">매달 특정일 반복</option>
-                <option value="specific-date">특정 지정 날짜 한 번만</option>
-            </select>
+            <label for="aiCycleInput">반복 주기 (자연어로 입력)</label>
+            <input type="text" id="aiCycleInput" placeholder="예: 매일 / 격일 / 월수금 / 매달 15일">
+            <div class="ai-hint">
+                💡 <b>입력 예시:</b> 매일, 격일, 매주, 월화수, 매달 25일, 2026-11-05
+            </div>
         </div>
 
-        <!-- 지정 요일 선택칸 -->
-        <div class="input-group" id="inputDaysBox" style="display:none;">
-            <label for="routineDays">요일 입력 (쉼표 구분)</label>
-            <input type="text" id="routineDays" placeholder="예: 월, 수, 금">
-        </div>
-        
-        <!-- 매달 특정일 입력칸 -->
-        <div class="input-group" id="inputMonthDayBox" style="display:none;">
-            <label for="routineMonthDay">매달 몇 일에 실행할까요? (숫자만)</label>
-            <input type="number" id="routineMonthDay" min="1" max="31" placeholder="예: 15">
-        </div>
-        
-        <!-- 특정 지정 날짜 선택칸 -->
-        <div class="input-group" id="inputDateBox" style="display:none;">
-            <label for="routineSpecificDate">실행할 목표 날짜 선택</label>
-            <input type="date" id="routineSpecificDate">
-        </div>
-
-        <button class="btn-add" onclick="addRoutine()">루틴 등록하기</button>
+        <button class="btn-add" onclick="addRoutine()">스마트 루틴 등록</button>
     </div>
 
     <!-- 2. 미니 달력 영역 -->
@@ -147,18 +125,56 @@
     let selectedDate = new Date();
     selectedDate.setHours(0,0,0,0);
 
-    // 기본 시작일을 오늘 날짜로 자동 세팅해주는 초기화 로직
     window.onload = function() {
         const todayStr = new Date().toISOString().split('T')[0];
         document.getElementById('routineStartDate').value = todayStr;
         displayRoutines();
     };
 
-    function toggleCycleInputs() {
-        const cycle = document.getElementById('routineCycle').value;
-        document.getElementById('inputDaysBox').style.display = cycle === 'custom-days' ? 'block' : 'none';
-        document.getElementById('inputMonthDayBox').style.display = cycle === 'monthly' ? 'block' : 'none';
-        document.getElementById('inputDateBox').style.display = cycle === 'specific-date' ? 'block' : 'none';
+    // 🧠 사용자의 입력 문장을 해석하는 가상 AI 엔진 (자연어 처리)
+    function parseAiCycle(text) {
+        const cleanText = text.replace(/\s+/g, ''); // 공백 제거
+        
+        // 1. 매일
+        if (cleanText.includes('매일')) {
+            return { cycle: 'daily', text: '매일 반복', details: {} };
+        }
+        // 2. 격일 / 2일에한번
+        if (cleanText.includes('격일') || cleanText.includes('2일')) {
+            return { cycle: 'every-2-days', text: '격일 반복', details: {} };
+        }
+        // 3. 매주 / 7일
+        if (cleanText === '매주' || cleanText.includes('7일')) {
+            return { cycle: 'weekly', text: '매주 반복', details: {} };
+        }
+        // 4. 격주 / 2주 / 14일
+        if (cleanText.includes('격주') || cleanText.includes('2주') || cleanText.includes('14일')) {
+            return { cycle: 'every-2-weeks', text: '격주 반복', details: {} };
+        }
+        // 5. 매달 특정일 (예: 매달 15일, 매월 20일)
+        const monthMatch = cleanText.match(/(매달|매월)(\d+)일/);
+        if (monthMatch) {
+            const dayNum = monthMatch[2];
+            return { cycle: 'monthly', text: `매달 ${dayNum}일 반복`, details: { monthDay: dayNum } };
+        }
+        // 6. 요일 감지 (예: 월수금, 화목, 토요일)
+        const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+        let detectedDays = [];
+        weekdays.forEach(w => {
+            if (cleanText.includes(w)) detectedDays.push(w);
+        });
+        if (detectedDays.length > 0) {
+            return { cycle: 'custom-days', text: `지정 요일(${detectedDays.join(', ')}) 반복`, details: { days: detectedDays } };
+        }
+        // 7. 특정 날짜 감지 (예: 2026-11-05 등 날짜 패턴)
+        const dateMatch = text.match(/(\d{4})[-./](\d{1,2})[-./](\d{1,2})/);
+        if (dateMatch) {
+            const formattedDate = `${dateMatch[1]}-${dateMatch[2].padStart(2, '0')}-${dateMatch[3].padStart(2, '0')}`;
+            return { cycle: 'specific-date', text: `지정 날짜(${formattedDate}) 수행`, details: { specificDate: formattedDate } };
+        }
+
+        // 해석 실패 시 기본값 매일 처리
+        return { cycle: 'daily', text: `해석 불가 기본값(매일) - 입력: ${text}`, details: {} };
     }
 
     function isRoutineOnDate(routine, date) {
@@ -177,12 +193,12 @@
         switch(routine.cycle) {
             case 'daily': return true;
             case 'every-2-days': return diffDays % 2 === 0;
-            case 'weekly': return diffDays % 7 === 0;
-            case 'every-2-weeks': return diffDays % 14 === 0;
-            case 'custom-days': return routine.details.days?.includes(dayOfWeek);
-            case 'monthly': return targetDate.getDate() === parseInt(routine.details.monthDay);
-            case 'specific-date': 
-                if (!routine.details.specificDate) return false;
+                case 'weekly': return diffDays % 7 === 0;
+case 'every-2-weeks': return diffDays % 14 === 0;
+case 'custom-days': return routine.details.days?.includes(dayOfWeek);
+case 'monthly': return targetDate.getDate() === parseInt(routine.details.monthDay);
+case 'specific-date':
+if (!routine.details.specificDate) return false;
 const sDate = new Date(routine.details.specificDate);
 sDate.setHours(0,0,0,0);
 return targetDate.getTime() === sDate.getTime();
@@ -246,43 +262,24 @@ renderCalendar();
 }
 function addRoutine() {
 const nameInput = document.getElementById('routineName');
-const cycleSelect = document.getElementById('routineCycle');
 const startDateInput = document.getElementById('routineStartDate');
+const aiInput = document.getElementById('aiCycleInput');
 if (nameInput.value.trim() === "") { alert("루틴 이름을 입력해 주세요!"); return; }
 if (!startDateInput.value) { alert("루틴 시작일을 선택해 주세요!"); return; }
-const cycle = cycleSelect.value;
-let details = {};
-let customText = cycleSelect.options[cycleSelect.selectedIndex].text;
-if (cycle === 'custom-days') {
-const daysInput = document.getElementById('routineDays').value;
-if(!daysInput) { alert("요일을 입력해 주세요!"); return; }
-details.days = daysInput.split(',').map(d => d.trim());
-customText = 지정 요일(${daysInput});
-} else if (cycle === 'monthly') {
-const mDay = document.getElementById('routineMonthDay').value;
-if(!mDay) { alert("날짜를 입력해 주세요!"); return; }
-details.monthDay = mDay;
-customText = 매달 ${mDay}일;
-} else if (cycle === 'specific-date') {
-const sDate = document.getElementById('routineSpecificDate').value;
-if(!sDate) { alert("날짜를 선택해 주세요!"); return; }
-details.specificDate = sDate;
-customText = 지정 날짜(${sDate});
-}
+if (aiInput.value.trim() === "") { alert("반복 주기를 텍스트로 입력해 주세요!"); return; }
+// AI 해석 엔진 구동
+const parsed = parseAiCycle(aiInput.value);
 const newRoutine = {
 name: nameInput.value,
-cycle: cycle,
-cycleText: customText,
-details: details,
+cycle: parsed.cycle,
+cycleText: parsed.text,
+details: parsed.details,
 startDate: startDateInput.value
 };
 routines.push(newRoutine);
 localStorage.setItem('routines', JSON.stringify(routines));
 nameInput.value = "";
-document.getElementById('routineDays').value = "";
-document.getElementById('routineMonthDay').value = "";
-document.getElementById('routineSpecificDate').value = "";
-// 오늘 날짜로 재설정
+aiInput.value = "";
 startDateInput.value = new Date().toISOString().split('T')[0];
 displayRoutines();
 }
