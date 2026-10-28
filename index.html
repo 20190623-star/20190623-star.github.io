@@ -5,28 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ROUTINE</title>
     <style>
-        /* 팬톤(PANTONE) 13-4304, 12-4303, 15-3922 기반의 감성적인 스카이 세레니티 테마 */
+        /* 🎨 팬톤 13-4304, 12-4303, 15-3922 매칭 맑은 스카이 테마 */
         :root {
-            --bg-main: #f0f4f8;       
+            --bg-main: #f0f4f8;       /* PANTONE 13-4304 Ballad Blue 맑은 베이스 */
             --bg-card: #ffffff;       
-            --border-color: #d2e4f1;   
-            --text-main: #4a6572;      
-            --text-muted: #8ca1ae;     
-            --primary: #9aa8ca;       
-            --primary-hover: #7f8fa6; 
-            --accent-bg: #fafbfc;     
-            --today-bg: #5c6b73;      
+            --border-color: #bcd2e8;   /* PANTONE 12-4303 Spun Sugar 선명한 하늘색 선 */
+            --text-main: #2a4365;      
+            --text-muted: #64748b;     
+            --primary: #9aa8ca;       /* PANTONE 15-3922 Air Blue 차분한 스카이 포인트 */
+            --primary-hover: #7b8cb6; 
+            --accent-bg: #f8fafc;     
+            --today-bg: #4a6572;      
         }
 
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--bg-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px 0; box-sizing: border-box; color: var(--text-main); }
-        .container { background: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color); width: 450px; box-shadow: 0 4px 15px rgba(74, 101, 114, 0.05); }
+        .container { background: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color); width: 450px; box-shadow: 0 4px 20px rgba(42, 67, 101, 0.08); }
         h1 { font-size: 26px; color: var(--text-main); text-align: center; margin-bottom: 24px; font-weight: 700; letter-spacing: 2px; }
         h2 { font-size: 16px; color: var(--text-main); margin-top: 0; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; font-weight: 600; }
         
         .input-group { margin-bottom: 14px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; color: var(--text-main); font-size: 13px; }
-        input, select { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; background-color: var(--accent-bg); color: #334155; }
-        input:focus, select:focus { outline: none; border-color: var(--primary-hover); background-color: var(--bg-card); box-shadow: 0 0 0 3px rgba(154, 168, 202, 0.3); }
+        input, select { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; background-color: var(--accent-bg); color: #1e293b; }
+        input:focus, select:focus { outline: none; border-color: var(--primary-hover); background-color: var(--bg-card); box-shadow: 0 0 0 3px rgba(154, 168, 202, 0.4); }
         
         .ai-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; padding-left: 2px; line-height: 1.4; }
 
@@ -36,17 +36,21 @@
         .section { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 2px solid #e2edf5; }
         .section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         
-        .calendar-container { margin-bottom: 15px; background: #f4f8fb; padding: 14px; border-radius: 10px; border: 1px solid var(--border-color); }
+        /* 캘린더 테두리와 칸 구분을 확실하고 선명하게 디자인 변경 */
+        .calendar-container { margin-bottom: 15px; background: #fafcff; padding: 14px; border-radius: 10px; border: 1px solid var(--border-color); }
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .calendar-header button { background: var(--bg-card); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; color: var(--text-main); font-weight: bold; }
         .calendar-header button:hover { background: #e6f0f7; }
         .calendar-header h3 { margin: 0; font-size: 14px; color: var(--text-main); font-weight: 700; }
+        
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; font-size: 12px; }
-        .weekday { font-weight: bold; color: var(--text-muted); padding-bottom: 4px; }
-        .day { padding: 8px 0; border-radius: 6px; cursor: pointer; font-weight: bold; color: #475569; position: relative; }
+        .weekday { font-weight: bold; color: var(--text-main); padding-bottom: 4px; border-bottom: 1px solid var(--border-color); }
+        .day { padding: 8px 0; border-radius: 6px; cursor: pointer; font-weight: bold; color: #334155; position: relative; border: 1px solid #e2edf5; background: #ffffff; }
         .day:hover { background: #e6f0f7; }
-        .day.today { background: var(--today-bg); color: white; }
-        .day.selected { border: 2px solid var(--primary); background: var(--bg-card); box-sizing: border-box; color: var(--text-main); }
+        
+        /* 달력 활성화 색상 명확화 */
+        .day.today { background: var(--today-bg); color: white; border-color: var(--today-bg); }
+        .day.selected { border: 2px solid var(--primary); box-sizing: border-box; background: #f0f4f8; }
         .day.has-task::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--primary); border-radius: 50%; }
         .day.today.has-task::after { background: white; }
 
@@ -54,7 +58,7 @@
         li { background: var(--bg-card); padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e2edf5; }
         
         .today-box { border-left: 5px solid var(--primary); background: #f4f8fb; }
-        .today-text { font-weight: bold; color: #3b525e; }
+        .today-text { font-weight: bold; color: #2a4365; }
         .btn-check { background-color: var(--primary); color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px; }
         .btn-check:hover { background-color: var(--primary-hover); }
         .no-task { color: var(--text-muted); font-size: 13px; text-align: center; padding: 20px 0; background: var(--accent-bg); border-radius: 8px; border: 1px dashed var(--border-color); }
@@ -134,7 +138,6 @@
         displayRoutines();
     };
 
-    // 🧠 [버그 완벽 수정] 튼튼하게 보완된 문장 분석 로직
     function parseAiCycle(text) {
         const cleanText = (text || '').replace(/\s+/g, ''); 
         
@@ -150,33 +153,27 @@
         if (cleanText.includes('격주') || cleanText.includes('2주') || cleanText.includes('14일')) {
             return { cycle: 'every-2-weeks', text: '격주 반복', details: {} };
         }
-        
-        // 매달 특정일 정규식 안전하게 수정
-        const monthMatch = cleanText.match(/(?:매달|매월)(\d+)일/);
-        if (monthMatch && monthMatch[1]) {
-            const dayNum = monthMatch[1];
-            return { cycle: 'monthly', text: `매달 ${dayNum}일 반복`, details: { monthDay: dayNum } };
+        if (cleanText.includes('매달') || cleanText.includes('매월')) {
+            const numStr = cleanText.replace(/[^0-9]/g, ''); 
+            if (numStr) {
+                return { cycle: 'monthly', text: '매달 ' + numStr + '일 반복', details: { monthDay: numStr } };
+            }
         }
         
-        // 요일 분석 감지
         const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
         let detectedDays = [];
         weekdays.forEach(w => {
             if (cleanText.includes(w)) detectedDays.push(w);
         });
         if (detectedDays.length > 0) {
-            return { cycle: 'custom-days', text: `지정 요일(${detectedDays.join(', ')}) 반복`, details: { days: detectedDays } };
+            return { cycle: 'custom-days', text: '지정 요일(' + detectedDays.join(', ') + ') 반복', details: { days: detectedDays } };
         }
         
-        // 기본 특정 날짜 정규식 안전하게 수정
-        const dateMatch = cleanText.match(/(\d{4})[-./](\d{1,2})[-./](\d{1,2})/);
-        if (dateMatch && dateMatch[1] && dateMatch[2] && dateMatch[3]) {
-            const formattedDate = `${dateMatch[1]}-${dateMatch[2].padStart(2, '0')}-${dateMatch[3].padStart(2, '0')}`;
-            return { cycle: 'specific-date', text: `지정 날짜(${formattedDate}) 수행`, details: { specificDate: formattedDate } };
+        if (cleanText.includes('-') && cleanText.length >= 8) {
+            return { cycle: 'specific-date', text: '지정 날짜(' + cleanText + ') 수행', details: { specificDate: cleanText } };
         }
 
-        // 아무 매칭도 안 될 때 시스템이 뻗지 않고 기본값 처리하도록 방어막 설정
-        return { cycle: 'daily', text: `매일 반복 (해석 기반: ${text})`, details: {} };
+        return { cycle: 'daily', text: '매일 반복 (기본 처리)', details: {} };
     }
 
     function isRoutineOnDate(routine, date) {
@@ -194,8 +191,8 @@
 
         switch(routine.cycle) {
             case 'daily': return true;
-                case 'every-2-days': return diffDays % 2 === 0;
-case 'weekly': return diffDays % 7 === 0;
+            case 'every-2-days': return diffDays % 2 === 0;
+                case 'weekly': return diffDays % 7 === 0;
 case 'every-2-weeks': return diffDays % 14 === 0;
 case 'custom-days': return routine.details && routine.details.days ? routine.details.days.includes(dayOfWeek) : false;
 case 'monthly': return targetDate.getDate() === parseInt(routine.details.monthDay);
@@ -215,45 +212,50 @@ if(!todayContainer || !allContainer) return;
 todayContainer.innerHTML = "";
 allContainer.innerHTML = "";
 const isSelectedToday = selectedDate.toDateString() === new Date().toDateString();
-todaySectionTitle.innerHTML = isSelectedToday ? "🔹 오늘 해야 할 일" : 🔹 ${selectedDate.getMonth()+1}월 ${selectedDate.getDate()}일의 할 일;
+todaySectionTitle.innerHTML = isSelectedToday ? "🔹 오늘 해야 할 일" : "🔹 " + (selectedDate.getMonth()+1) + "월 " + selectedDate.getDate() + "일의 할 일";
 let taskCount = 0;
 routines.forEach((routine, index) => {
 const liAll = document.createElement('li');
 liAll.className = 'all-box';
-liAll.innerHTML = <div> <strong>${routine.name}</strong>  <span class="routine-period">🔁 ${routine.cycleText} (시작일: ${routine.startDate})</span> </div> <button class="btn-delete" onclick="deleteRoutine(${index})">❌ 삭제</button>;
+liAll.innerHTML = '' + routine.name + '🔁 ' + routine.cycleText + ' (시작일: ' + routine.startDate + ')❌ 삭제';
 allContainer.appendChild(liAll);
 if (isRoutineOnDate(routine, selectedDate)) {
 taskCount++;
 const liToday = document.createElement('li');
 liToday.className = 'today-box';
-liToday.innerHTML = <span class="today-text">▪️ ${routine.name}</span> <button class="btn-check" onclick="completeTask('${routine.name}', this)">완료</button>;
+liToday.innerHTML = '▪️ ' + routine.name + '완료';
 todayContainer.appendChild(liToday);
 }
 });
 if (taskCount === 0) {
-todayContainer.innerHTML = <div class="no-task">🎉 예정된 루틴이 없습니다! 푹 쉬세요.</div>;
+todayContainer.innerHTML = '🎉 예정된 루틴이 없습니다! 푹 쉬세요.';
 }
 renderCalendar();
 }
+/* 🧠 백틱 기호(`)를 자바스크립트 기본 덧셈문 구조로 우회 수정하여 브라우저 강제 먹통 에러 완전 전면 차단 */
 function renderCalendar() {
 const year = currentCalDate.getFullYear();
 const month = currentCalDate.getMonth();
 const titleEl = document.getElementById('calendarTitle');
-if(titleEl) titleEl.innerText = ${year}년 ${month + 1}월;
+if(titleEl) titleEl.innerText = year + "년 " + (month + 1) + "월";
 const grid = document.getElementById('calendarGrid');
 if(!grid) return;
 grid.innerHTML = '';
-['일','월','화','수','목','금','토'].forEach(w => grid.innerHTML += <div class="weekday">${w}</div>);
+['일','월','화','수','목','금','토'].forEach(w => {
+grid.innerHTML += '' + w + '';
+});
 const firstDay = new Date(year, month, 1).getDay();
 const lastDate = new Date(year, month + 1, 0).getDate();
-for (let i = 0; i < firstDay; i++) grid.innerHTML += <div></div>;
+for (let i = 0; i < firstDay; i++) {
+grid.innerHTML += '';
+}
 for (let d = 1; d <= lastDate; d++) {
 const thisDate = new Date(year, month, d);
 thisDate.setHours(0,0,0,0);
 const isToday = thisDate.toDateString() === new Date().toDateString() ? 'today' : '';
 const isSelected = thisDate.getTime() === selectedDate.getTime() ? 'selected' : '';
 const hasTask = routines.some(r => isRoutineOnDate(r, thisDate)) ? 'has-task' : '';
-grid.innerHTML += <div class="day ${isToday} ${isSelected} ${hasTask}" onclick="clickCalDate(${year}, ${month}, ${d})">${d}</div>;
+grid.innerHTML += '' + d + '';
 }
 }
 function clickCalDate(y, m, d) {
@@ -285,7 +287,10 @@ routines.push(newRoutine);
 localStorage.setItem('routines', JSON.stringify(routines));
 nameInput.value = "";
 aiInput.value = "";
-startDateInput.value = new Date().toISOString().split('T')[0];
+try {
+const todayStr = new Date().toISOString().split('T')[0];
+startDateInput.value = todayStr;
+} catch(e){}
 displayRoutines();
 }
 function deleteRoutine(index) {
@@ -296,7 +301,7 @@ displayRoutines();
 }
 }
 function completeTask(name, button) {
-alert(👏 [${name}] 완료! 수고하셨습니다.);
+alert('👏 [' + name + '] 완료! 수고하셨습니다.');
 button.disabled = true;
 button.innerText = "🎉 완료됨";
 button.parentElement.style.opacity = "0.5";
