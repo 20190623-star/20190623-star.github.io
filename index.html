@@ -5,64 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ROUTINE</title>
     <style>
+        /* 화사하고 깨끗한 하늘색(Sky Blue) 파스텔 테마 설정 */
         :root {
-            --bg-main: #f4f4f2;
-            --bg-card: #ffffff;
-            --border-color: #e3e3e0;
-            --text-main: #4a4a48;
-            --text-muted: #8a8a85;
-            --primary: #878f84;
-            --primary-hover: #70786d;
-            --accent-bg: #fafaf9;
-            --today-bg: #697067;
+            --bg-main: #f0f6fa;       /* 부드러운 파스텔 하늘색 바탕 */
+            --bg-card: #ffffff;       /* 깔끔한 화이트 카드 */
+            --border-color: #bae6fd;   /* 밝은 하늘색 테두리 선 */
+            --text-main: #0c4a6e;      /* 깊고 선명한 딥 블루 글씨 */
+            --text-muted: #67e8f9;    /* 밝고 투명한 시안 블루 포인트 */
+            --primary: #38bdf8;       /* 산뜻한 하늘색 (핵심 포인트) */
+            --primary-hover: #0ea5e9; /* 짙은 하늘색 */
+            --accent-bg: #f0f9ff;     /* 맑고 가벼운 얼음물빛 배경색 */
+            --today-bg: #0284c7;      /* 오늘 날짜용 스카이 블루 */
         }
 
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--bg-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px 0; box-sizing: border-box; color: var(--text-main); }
-        .container { background: var(--bg-card); padding: 30px; border-radius: 10px; border: 1px solid var(--border-color); width: 450px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
-        h1 { font-size: 26px; color: var(--text-main); text-align: center; margin-bottom: 24px; font-weight: 700; letter-spacing: 2px; }
-        h2 { font-size: 15px; color: var(--text-main); margin-top: 0; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; font-weight: 600; letter-spacing: -0.3px; }
+        .container { background: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color); width: 450px; box-shadow: 0 4px 20px rgba(56,189,248,0.12); }
+        h1 { font-size: 26px; color: var(--text-main); text-align: center; margin-bottom: 24px; font-weight: 700; letter-spacing: 3px; }
+        h2 { font-size: 15px; color: var(--text-main); margin-top: 0; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; font-weight: 600; }
+        
         .input-group { margin-bottom: 16px; }
         label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--text-main); font-size: 13px; }
-        input, select { width: 100%; padding: 10px 12px; box-sizing: border-box; border: 1px solid var(--border-color); border-radius: 6px; font-size: 14px; margin-bottom: 5px; background-color: var(--accent-bg); color: var(--text-main); transition: border-color 0.2s; }
-        input:focus, select:focus { outline: none; border-color: var(--primary); background-color: var(--bg-card); }
-        .btn-add { width: 100%; padding: 12px; background-color: var(--primary); color: white; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 600; margin-bottom: 20px; transition: background-color 0.2s; }
+        input, select { width: 100%; padding: 11px 12px; box-sizing: border-box; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; margin-bottom: 5px; background-color: var(--accent-bg); color: var(--text-main); transition: all 0.2s; }
+        input:focus, select:focus { outline: none; border-color: var(--primary); background-color: var(--bg-card); box-shadow: 0 0 0 3px rgba(56,189,248,0.25); }
+        
+        .btn-add { width: 100%; padding: 12px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: 600; margin-bottom: 20px; transition: background-color 0.2s; }
         .btn-add:hover { background-color: var(--primary-hover); }
         
-        /* 섹션 구분 스타일 */
+        /* 섹션 구분선 */
         .section { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
         .section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         
-        /* 캘린더 미니 스타일 */
-        .calendar-container { margin-bottom: 15px; background: var(--bg-card); padding: 14px; border-radius: 8px; border: 1px solid var(--border-color); }
+        /* 미니 달력 디자인 선명하게 최적화 */
+        .calendar-container { margin-bottom: 15px; background: var(--accent-bg); padding: 14px; border-radius: 10px; border: 1px solid var(--border-color); }
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .calendar-header button { background: var(--accent-bg); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; color: var(--text-main); }
-        .calendar-header button:hover { background: #eeeede; }
-        .calendar-header h3 { margin: 0; font-size: 14px; color: var(--text-main); font-weight: 600; }
+        .calendar-header button { background: var(--bg-card); border: 1px solid var(--border-color); padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; color: var(--text-main); font-weight: 600; }
+        .calendar-header button:hover { background: var(--border-color); color: #ffffff; }
+        .calendar-header h3 { margin: 0; font-size: 14px; color: var(--text-main); font-weight: 700; }
+        
+        /* 달력 날짜 그리드 */
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; font-size: 12px; }
-        .weekday { font-weight: 500; color: var(--text-muted); padding-bottom: 4px; }
-        .day { padding: 6px 0; border-radius: 6px; cursor: pointer; font-weight: 600; color: var(--text-main); position: relative; border: 1px solid transparent; }
-        .day:hover { background: var(--accent-bg); }
+        .weekday { font-weight: 600; color: #0284c7; padding-bottom: 4px; }
+        .day { padding: 8px 0; border-radius: 6px; cursor: pointer; font-weight: 700; color: var(--text-main); position: relative; border: 1px solid transparent; }
+        .day:hover { background: var(--border-color); color: white; }
+        
+        /* 달력 상태 색상 */
         .day.today { background: var(--today-bg); color: white; }
-        .day.selected { border: 1px solid var(--text-main); box-sizing: border-box; background: var(--accent-bg); color: var(--text-main); }
-        .day.today.selected { background: var(--today-bg); color: white; border: 1px solid var(--text-main); }
-        .day.has-task::after { content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--primary); border-radius: 50%; }
+        .day.selected { border: 2px solid var(--primary); background: var(--bg-card); color: var(--text-main); box-sizing: border-box; }
+        .day.today.selected { background: var(--today-bg); color: white; border: 2px solid var(--text-main); }
+        
+        /* 루틴이 지정된 날 파란 점 찍기 */
+        .day.has-task::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--today-bg); border-radius: 50%; }
         .day.today.has-task::after { background: white; }
 
         ul { list-style: none; padding: 0; margin: 0; }
-        li { background: var(--accent-bg); padding: 12px; border-radius: 6px; margin-bottom: 8px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); }
+        li { background: var(--bg-card); padding: 14px; border-radius: 8px; margin-bottom: 8px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); box-shadow: 0 2px 4px rgba(56,189,248,0.03); }
         
-        /* 할 일 전용 스타일 (뮤트 감성 톤) */
-        .today-box { border-left: 4px solid var(--primary); background: #f7f7f5; }
-        .today-text { font-weight: 600; color: var(--primary-hover); }
-        .btn-check { background-color: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-color); padding: 5px 12px; border-radius: 4px; cursor: pointer; font-weight: 500; font-size: 12px; transition: all 0.2s; }
-        .btn-check:hover { background: var(--border-color); }
-        .no-task { color: var(--text-muted); font-size: 13px; text-align: center; padding: 20px 0; background: var(--accent-bg); border-radius: 6px; border: 1px dashed var(--border-color); }
+        /* 오늘 해야 할 일 박스 청량한 스카이 블루 매칭 */
+        .today-box { border-left: 4px solid var(--primary); background: var(--accent-bg); }
+        .today-text { font-weight: 600; color: #0369a1; }
+        .btn-check { background-color: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; transition: all 0.2s; }
+        .btn-check:hover { background: var(--primary); border-color: var(--primary); color: white; }
+        .no-task { color: #0369a1; font-size: 13px; text-align: center; padding: 20px 0; background: var(--accent-bg); border-radius: 8px; border: 1px dashed var(--border-color); }
         
-        /* 전체 목록 전용 스타일 */
-        .all-box { border-left: 4px solid var(--text-muted); }
-        .routine-period { font-size: 11px; color: var(--text-muted); display: block; margin-top: 3px; }
-        .btn-delete { background: none; border: none; color: #b56969; cursor: pointer; font-size: 12px; font-weight: 600; padding: 4px; }
-        .btn-delete:hover { text-decoration: underline; }
+        /* 전체 목록 박스 차분하게 세팅 */
+        .all-box { border-left: 4px solid #7dd3fc; }
+        .routine-period { font-size: 11px; color: #0369a1; display: block; margin-top: 4px; }
+        .btn-delete { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 12px; font-weight: 600; padding: 4px; }
+        .btn-delete:hover { text-decoration: underline; color: #b91c1c; }
     </style>
 </head>
 <body>
@@ -89,15 +98,17 @@
             </select>
         </div>
 
-        <!-- 동적 조건 입력창 영역 -->
+        <!-- 동적 조건 입력창 영역 (지정 요일) -->
         <div class="input-group" id="inputDaysBox" style="display:none;">
             <label for="routineDays">요일 선택 (쉼표 구분)</label>
             <input type="text" id="routineDays" placeholder="예: 월, 수, 금">
         </div>
+        <!-- 동적 조건 입력창 영역 (매달 특정일) -->
         <div class="input-group" id="inputMonthDayBox" style="display:none;">
             <label for="routineMonthDay">매달 며칠날 할까요? (숫자만)</label>
             <input type="number" id="routineMonthDay" min="1" max="31" placeholder="예: 15">
         </div>
+        <!-- 동적 조건 입력창 영역 (특정 지정 날짜) -->
         <div class="input-group" id="inputDateBox" style="display:none;">
             <label for="routineSpecificDate">원하는 날짜 선택</label>
             <input type="date" id="routineSpecificDate">
@@ -111,7 +122,7 @@
         <div class="calendar-container">
             <div class="calendar-header">
                 <button onclick="changeMonth(-1)">◀</button>
-                <h3 id="calendarTitle">2026년 10월</h3>
+                <h3 id="calendarTitle"></h3>
                 <button onclick="changeMonth(1)">▶</button>
             </div>
             <div class="calendar-grid" id="calendarGrid"></div>
@@ -163,20 +174,19 @@
             case 'weekly': return diffDays % 7 === 0;
             case 'every-2-weeks': return diffDays % 14 === 0;
             case 'custom-days': return routine.details.days?.includes(dayOfWeek);
-            case 'monthly': return targetDate.getDate() === parseInt(routine.details.monthDay);
-            case 'specific-date': 
-                if (!routine.details.specificDate) return false;
-                const sDate = new Date(routine.details.specificDate);
-                sDate.setHours(0,0,0,0);
-                return targetDate.getTime() === sDate.getTime();
-            default: return false;
-        }
-    }
-
-    function displayRoutines() {
-        const todayContainer = document.getElementById('todayContainer');
-        const allContainer = document.getElementById('allContainer');
-        const todaySectionTitle = document.getElementById('todaySectionTitle');
+                case 'monthly': return targetDate.getDate() === parseInt(routine.details.monthDay);
+case 'specific-date':
+if (!routine.details.specificDate) return false;
+const sDate = new Date(routine.details.specificDate);
+sDate.setHours(0,0,0,0);
+return targetDate.getTime() === sDate.getTime();
+default: return false;
+}
+}
+function displayRoutines() {
+const todayContainer = document.getElementById('todayContainer');
+const allContainer = document.getElementById('allContainer');
+const todaySectionTitle = document.getElementById('todaySectionTitle');
 todayContainer.innerHTML = "";
 allContainer.innerHTML = "";
 const isSelectedToday = selectedDate.toDateString() === new Date().toDateString();
@@ -209,75 +219,3 @@ grid.innerHTML = '';
 ['일','월','화','수','목','금','토'].forEach(w => grid.innerHTML += <div class="weekday">${w}</div>);
 const firstDay = new Date(year, month, 1).getDay();
 const lastDate = new Date(year, month + 1, 0).getDate();
-for (let i = 0; i < firstDay; i++) grid.innerHTML += <div></div>;
-for (let d = 1; d <= lastDate; d++) {
-const thisDate = new Date(year, month, d);
-thisDate.setHours(0,0,0,0);
-const isToday = thisDate.toDateString() === new Date().toDateString() ? 'today' : '';
-const isSelected = thisDate.getTime() === selectedDate.getTime() ? 'selected' : '';
-const hasTask = routines.some(r => isRoutineOnDate(r, thisDate)) ? 'has-task' : '';
-grid.innerHTML += <div class="day ${isToday} ${isSelected} ${hasTask}" onclick="clickCalDate(${year}, ${month}, ${d})">${d}</div>;
-}
-}
-function clickCalDate(y, m, d) {
-selectedDate = new Date(y, m, d);
-selectedDate.setHours(0,0,0,0);
-displayRoutines();
-}
-function changeMonth(dir) {
-currentCalDate.setMonth(currentCalDate.getMonth() + dir);
-renderCalendar();
-}
-function addRoutine() {
-const nameInput = document.getElementById('routineName');
-const cycleSelect = document.getElementById('routineCycle');
-if (nameInput.value.trim() === "") { alert("루틴 이름을 입력해 주세요!"); return; }
-const cycle = cycleSelect.value;
-let details = {};
-let customText = cycleSelect.options[cycleSelect.selectedIndex].text;
-if (cycle === 'custom-days') {
-const daysInput = document.getElementById('routineDays').value;
-details.days = daysInput.split(',').map(d => d.trim());
-customText = 지정 요일(${daysInput});
-} else if (cycle === 'monthly') {
-const mDay = document.getElementById('routineMonthDay').value;
-if(!mDay) { alert("날짜를 입력해 주세요!"); return; }
-details.monthDay = mDay;
-customText = 매달 ${mDay}일;
-} else if (cycle === 'specific-date') {
-const sDate = document.getElementById('routineSpecificDate').value;
-if(!sDate) { alert("날짜를 선택해 주세요!"); return; }
-details.specificDate = sDate;
-customText = 지정 날짜(${sDate});
-}
-const tzOffset = (new Date()).getTimezoneOffset() * 60000;
-const localISOTime = (new Date(Date.now() - tzOffset)).toISOString().split('T')[0];
-const newRoutine = {
-name: nameInput.value,
-cycle: cycle,
-cycleText: customText,
-details: details,
-startDate: localISOTime
-};
-routines.push(newRoutine);
-localStorage.setItem('routines', JSON.stringify(routines));
-nameInput.value = "";
-document.getElementById('routineDays').value = "";
-document.getElementById('routineMonthDay').value = "";
-document.getElementById('routineSpecificDate').value = "";
-displayRoutines();
-}
-function deleteRoutine(index) {
-if(confirm("이 루틴을 완전히 삭제하시겠습니까?")) {
-routines.splice(index, 1);
-localStorage.setItem('routines', JSON.stringify(routines));
-displayRoutines();
-}
-}
-function completeTask(name, button) {
-alert(👏 [${name}] 완료! 수고하셨습니다.);
-button.disabled = true;
-button.innerText = "🎉 완료됨";
-button.parentElement.style.opacity = "0.5";
-}
-displayRoutines();
