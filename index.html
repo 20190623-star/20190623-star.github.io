@@ -2,11 +2,15 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>ROUTINE</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style id="dynamicCustomFontStyle"></style>
     <style>
         :root {
-            /* 이전 색상 테마 유지 */
             --bg-main: #f0f4f8;       
             --bg-card: #ffffff;       
             --border-color: #bcd2e8;   
@@ -16,297 +20,1693 @@
             --primary-hover: #7b8cb6; 
             --accent-bg: #f8fafc;     
             --today-bg: #4a6572;      
+            --soft-blue-bg: #e6f0f7;
+            --danger: #e06d6d;
+            --font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-            background-color: var(--bg-main); 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            margin: 0; 
-            padding: 20px 0; 
-            box-sizing: border-box; 
-            color: var(--text-main); 
+
+        /* 테마 프리셋 */
+        [data-theme="sage"] {
+            --bg-main: #f1f5f2;
+            --bg-card: #ffffff;
+            --border-color: #c5d6c8;
+            --text-main: #2d4234;
+            --text-muted: #66786b;
+            --primary: #8ba892;
+            --primary-hover: #708e77;
+            --accent-bg: #f7faf8;
+            --today-bg: #476350;
+            --soft-blue-bg: #e5efe7;
         }
-        .container { 
-            background: var(--bg-card); 
-            padding: 30px; 
-            border-radius: 12px; 
-            border: 1px solid var(--border-color); 
-            width: 450px; 
-            box-shadow: 0 4px 20px rgba(42, 67, 101, 0.08); 
+
+        [data-theme="sand"] {
+            --bg-main: #f6f3ee;
+            --bg-card: #ffffff;
+            --border-color: #dfd5c7;
+            --text-main: #4a3f35;
+            --text-muted: #7d7065;
+            --primary: #b8a38c;
+            --primary-hover: #9c866f;
+            --accent-bg: #faf8f5;
+            --today-bg: #6b5b4b;
+            --soft-blue-bg: #efe9e0;
         }
-        h1 { 
-            font-size: 26px; 
-            color: var(--text-main); 
-            text-align: center; 
-            margin-top: 0;
-            margin-bottom: 24px; 
-            font-weight: 700; 
-            letter-spacing: 2px; 
+
+        [data-theme="lavender"] {
+            --bg-main: #f4f2f7;
+            --bg-card: #ffffff;
+            --border-color: #d4cde3;
+            --text-main: #3b3252;
+            --text-muted: #6e6582;
+            --primary: #a396c2;
+            --primary-hover: #8678a8;
+            --accent-bg: #f9f8fc;
+            --today-bg: #584c75;
+            --soft-blue-bg: #ece8f5;
         }
-        h2 { 
-            font-size: 16px; 
-            color: var(--text-main); 
-            margin-top: 0; 
-            margin-bottom: 14px; 
-            display: flex; 
-            align-items: center; 
-            gap: 6px; 
-            font-weight: 600; 
+
+        [data-theme="slate"] {
+            --bg-main: #eef0f2;
+            --bg-card: #ffffff;
+            --border-color: #cbd2d9;
+            --text-main: #1f2933;
+            --text-muted: #616e7c;
+            --primary: #7b8794;
+            --primary-hover: #52606d;
+            --accent-bg: #f8f9fa;
+            --today-bg: #323f4b;
+            --soft-blue-bg: #e4e7eb;
         }
-        .input-group { margin-bottom: 14px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; color: var(--text-main); font-size: 13px; }
-        input { 
-            width: 100%; 
-            padding: 10px; 
-            box-sizing: border-box; 
-            border: 1px solid var(--border-color); 
-            border-radius: 8px; 
-            font-size: 14px; 
-            background-color: var(--accent-bg); 
-            color: #1e293b; 
-            outline: none;
+
+        * {
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -webkit-tap-highlight-color: transparent;
         }
-        input:focus {
-            border-color: var(--primary);
-        }
-        .btn-add { 
-            width: 100%; 
-            padding: 12px; 
-            background-color: var(--primary); 
-            color: white; 
-            border: none; 
-            border-radius: 8px; 
-            font-size: 14px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            margin-bottom: 20px; 
-            transition: background-color 0.2s;
-        }
-        .btn-add:hover { background-color: var(--primary-hover); }
-        .section { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 2px solid #e2edf5; }
-        .section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        
-        /* 캘린더 스타일 */
-        .calendar-container { 
-            margin-bottom: 15px; 
-            background: #fafcff; 
-            padding: 16px; 
-            border-radius: 10px; 
-            border: 1px solid var(--border-color); 
-        }
-        .calendar-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 14px; 
-        }
-        .calendar-header h3 {
+
+        html, body {
             margin: 0;
-            font-size: 15px;
-            font-weight: bold;
+            padding: 0;
+            width: 100%;
+            min-height: 100dvh;
+            font-family: var(--font-family);
+            background-color: var(--bg-main);
             color: var(--text-main);
+            transition: background-color 0.25s ease, color 0.25s ease;
         }
-        .calendar-header button { 
-            background: var(--bg-card); 
-            border: 1px solid var(--border-color); 
-            padding: 4px 10px; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            font-size: 12px; 
-            color: var(--text-main); 
-            font-weight: bold; 
-            transition: background-color 0.2s;
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 24px 16px 48px;
         }
-        .calendar-header button:hover {
-            background-color: #e6f0f7;
+
+        .app-shell {
+            width: 100%;
+            max-width: 430px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 28px 22px 36px;
+            box-shadow: 0 8px 24px rgba(30, 41, 59, 0.06);
+            transition: max-width 0.3s ease, padding 0.3s ease, border-color 0.25s ease;
         }
-        .calendar-grid { 
-            display: grid; 
-            grid-template-columns: repeat(7, 1fr); 
-            gap: 4px; 
-            text-align: center; 
+
+        /* 가로(와이드) 레이아웃 모드 */
+        body.layout-landscape .app-shell {
+            max-width: 920px;
+            padding: 32px 32px 38px;
         }
-        .weekday { 
-            font-size: 12px;
-            font-weight: bold; 
-            color: var(--text-main); 
-            padding-bottom: 6px; 
+
+        body.layout-landscape .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            align-items: start;
         }
-        .day { 
-            aspect-ratio: 1;
+
+        body.layout-landscape .col-left .calendar-wrap {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 760px) {
+            body.layout-landscape .app-shell {
+                max-width: 430px;
+            }
+            body.layout-landscape .main-grid {
+                display: block;
+            }
+            body.layout-landscape .col-left .calendar-wrap {
+                margin-bottom: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+                background-color: var(--bg-card);
+            }
+
+            .app-shell {
+                max-width: 100% !important;
+                min-height: 100dvh;
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+                padding-top: calc(20px + env(safe-area-inset-top));
+                padding-bottom: calc(36px + env(safe-area-inset-bottom));
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+            padding: 0 2px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        header h1 {
+            font-size: 21px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        header .subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .btn-settings {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--accent-bg);
+            color: var(--text-main);
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 6px; 
-            cursor: pointer; 
-            font-size: 13px;
-            font-weight: bold; 
-            color: #334155; 
-            position: relative; 
-            border: 1px solid #e2edf5; 
-            background: #ffffff; 
-            transition: all 0.15s ease;
+            transition: background-color 0.15s ease, transform 0.2s ease;
         }
-        .day:hover { background: #e6f0f7; }
-        .day.today { 
-            background: var(--today-bg); 
-            color: white; 
-            border-color: var(--today-bg); 
-        }
-        .day.selected { 
-            border: 2px solid var(--primary); 
-            box-sizing: border-box; 
-            background: #f0f4f8; 
-        }
-        .day.today.selected {
-            background: var(--today-bg);
-            border: 2px solid var(--primary-hover);
-            color: white;
-        }
-        .day.has-task::after { 
-            content: ''; 
-            position: absolute; 
-            bottom: 3px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            width: 4px; 
-            height: 4px; 
-            background: var(--primary); 
-            border-radius: 50%; 
-        }
-        .day.today.has-task::after {
-            background: #ffffff;
-        }
-        
-        ul { list-style: none; padding: 0; margin: 0; }
-        li { 
-            background: var(--bg-card); 
-            padding: 12px; 
-            border-radius: 8px; 
-            margin-bottom: 8px; 
-            font-size: 14px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border: 1px solid #e2edf5; 
-        }
-        .today-box { border-left: 5px solid var(--primary); background: #f4f8fb; }
-        .today-text { font-weight: bold; color: #2a4365; }
-        .btn-check { 
-            background-color: var(--primary); 
-            color: white; 
-            border: none; 
-            padding: 6px 12px; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            font-size: 12px; 
-            transition: background-color 0.2s;
-        }
-        .btn-check:hover { background-color: var(--primary-hover); }
-        .no-task { 
-            color: var(--text-muted); 
-            font-size: 13px; 
-            text-align: center; 
-            padding: 20px 0; 
-            background: var(--accent-bg); 
-            border-radius: 8px; 
-            border: 1px dashed var(--border-color); 
-        }
-        .all-box { border-left: 5px solid var(--text-muted); }
-        .routine-period { font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px; }
-        .btn-delete { background: none; border: none; color: #e06d6d; cursor: pointer; font-size: 12px; font-weight: bold; padding: 4px; }
 
-        /* 접기/펼치기 토글 전용 스타일 추가 */
-        .toggle-header {
-            cursor: pointer;
-            user-select: none;
+        .btn-settings svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.35s ease;
+        }
+
+        .btn-settings:hover {
+            background: var(--soft-blue-bg);
+        }
+
+        .btn-settings:hover svg {
+            transform: rotate(45deg);
+        }
+
+        .btn-settings:active {
+            transform: scale(0.95);
+        }
+
+        /* 설정 패널 (모달) */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.35);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 18px;
+            z-index: 200;
+            backdrop-filter: blur(2px);
+            overflow-y: auto;
+        }
+
+        .modal-backdrop.open {
+            display: flex;
+        }
+
+        .settings-modal {
+            width: 100%;
+            max-width: 400px;
+            max-height: 90dvh;
+            overflow-y: auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px 22px;
+            box-shadow: 0 16px 36px rgba(15, 23, 42, 0.16);
+            animation: modalIn 0.2s ease-out;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: translateY(10px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal-head {
+            display: flex;
             justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-head h3 {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .btn-close-modal {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px 6px;
+        }
+
+        .setting-group {
+            margin-bottom: 20px;
+        }
+
+        .setting-group:last-of-type {
+            margin-bottom: 22px;
+        }
+
+        .setting-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 9px;
+        }
+
+        .setting-label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 9px;
+        }
+
+        .setting-label-row .setting-label {
             margin-bottom: 0;
-            padding: 6px 0;
-            border-radius: 6px;
-            transition: background-color 0.15s;
         }
-        .toggle-header:hover {
-            opacity: 0.8;
+
+        /* 달성 이모지 설정 UI */
+        .emoji-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
         }
-        .toggle-icon {
-            font-size: 12px;
-            transition: transform 0.25s ease;
+
+        .emoji-card {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1.5px solid #e2e8f0;
+            background: var(--accent-bg);
+        }
+
+        .emoji-card-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .emoji-card-head span {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .emoji-card-head small {
+            font-size: 10.5px;
             color: var(--text-muted);
         }
-        .collapsible-wrapper {
-            max-height: 1000px;
-            overflow: hidden;
-            transition: max-height 0.3s ease-in-out, opacity 0.25s ease-in-out, margin-top 0.25s ease;
-            opacity: 1;
-            margin-top: 14px;
+
+        .emoji-input-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .collapsible-wrapper.collapsed {
+
+        .emoji-input {
+            width: 52px !important;
+            height: 40px !important;
+            padding: 0 !important;
+            text-align: center;
+            font-size: 20px !important;
+            border-radius: 10px;
+            border: 1.5px solid var(--border-color);
+            background: var(--bg-card);
+            flex-shrink: 0;
+        }
+
+        .emoji-presets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .emoji-preset-btn {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border-radius: 7px;
+            border: 1px solid #e2e8f0;
+            background: var(--bg-card);
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.1s ease, background-color 0.15s ease;
+        }
+
+        .emoji-preset-btn:hover {
+            background: var(--soft-blue-bg);
+        }
+
+        .emoji-preset-btn:active {
+            transform: scale(0.92);
+        }
+
+        /* 컬러 선택 버튼 */
+        .color-options {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .color-chip {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 4px;
+            border-radius: 10px;
+            border: 1.5px solid #e2e8f0;
+            background: var(--accent-bg);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-main);
+            transition: all 0.15s ease;
+        }
+
+        .color-chip.active {
+            border-color: var(--text-main);
+            background: var(--soft-blue-bg);
+        }
+
+        .swatch {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.12);
+        }
+
+        .custom-color-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 9px 12px;
+            border-radius: 10px;
+            border: 1.5px solid #e2e8f0;
+            background: var(--accent-bg);
+            transition: all 0.15s ease;
+        }
+
+        .custom-color-bar.active {
+            border-color: var(--text-main);
+            background: var(--soft-blue-bg);
+        }
+
+        .custom-color-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .custom-color-info strong {
+            font-size: 12.5px;
+            color: var(--text-main);
+        }
+
+        .custom-color-info span {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .color-picker-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input[type="color"] {
+            width: 34px;
+            height: 34px;
+            padding: 0;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.15);
+            background: transparent;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        input[type="color"]::-webkit-color-swatch {
+            border: none;
+            border-radius: 50%;
+        }
+
+        /* 폰트 선택 버튼 */
+        .font-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .option-btn {
+            height: 40px;
+            padding: 0 10px;
+            border-radius: 10px;
+            border: 1.5px solid #e2e8f0;
+            background: var(--accent-bg);
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .option-btn.active {
+            border-color: var(--text-main);
+            background: var(--soft-blue-bg);
+        }
+
+        .font-upload-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1.5px dashed var(--border-color);
+            background: var(--accent-bg);
+        }
+
+        .font-upload-box.active {
+            border-style: solid;
+            border-color: var(--text-main);
+            background: var(--soft-blue-bg);
+        }
+
+        .font-upload-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            overflow: hidden;
+        }
+
+        .font-upload-text strong {
+            font-size: 12.5px;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .font-upload-text span {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .font-upload-actions {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .btn-mini {
+            height: 28px;
+            padding: 0 9px;
+            border-radius: 7px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-mini:hover {
+            background: var(--soft-blue-bg);
+        }
+
+        /* 화면 방향 선택 버튼 */
+        .layout-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .layout-note {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 6px;
+            line-height: 1.4;
+        }
+
+        /* 입력 폼 영역 */
+        .composer {
+            background: var(--accent-bg);
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 16px;
+            margin-bottom: 22px;
+        }
+
+        .field-row {
+            margin-bottom: 12px;
+        }
+
+        .field-row:last-of-type {
+            margin-bottom: 14px;
+        }
+
+        .field-split {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 10px;
+        }
+
+        label.field-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        input[type="text"], input[type="date"] {
+            width: 100%;
+            height: 44px;
+            padding: 0 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 16px;
+            color: var(--text-main);
+            background: var(--bg-card);
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="date"] {
+            font-size: 14px;
+            padding: 0 10px;
+        }
+
+        input::placeholder {
+            color: var(--text-muted);
+            opacity: 0.65;
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(154, 168, 202, 0.22);
+        }
+
+        .composer-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            height: 44px;
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.15s ease, transform 0.1s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.985);
+        }
+
+        .btn-ghost {
+            height: 44px;
+            padding: 0 16px;
+            background: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: none;
+        }
+
+        .btn-ghost:active {
+            background: var(--soft-blue-bg);
+        }
+
+        /* 캘린더 영역 */
+        .calendar-wrap {
+            background: var(--accent-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px 12px;
+            margin-bottom: 24px;
+        }
+
+        .calendar-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            padding: 0 6px;
+        }
+
+        .calendar-title-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .calendar-top h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .btn-today {
+            height: 26px;
+            padding: 0 9px;
+            border-radius: 7px;
+            border: 1px solid var(--border-color);
+            background: var(--today-bg);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 11.5px;
+            font-weight: 600;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.15s ease, transform 0.1s ease;
+            animation: popIn 0.18s ease-out;
+        }
+
+        .btn-today.visible {
+            display: inline-flex;
+        }
+
+        .btn-today:hover {
+            opacity: 0.9;
+        }
+
+        .btn-today:active {
+            transform: scale(0.95);
+        }
+
+        .nav-btns {
+            display: flex;
+            gap: 6px;
+        }
+
+        .nav-btn {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 9px;
+            color: var(--text-main);
+            font-size: 15px;
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+        }
+
+        .nav-btn:active {
+            background: var(--soft-blue-bg);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            text-align: center;
+        }
+
+        .weekday {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-main);
+            padding-bottom: 6px;
+        }
+
+        .day {
+            aspect-ratio: 1;
+            min-height: 42px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--text-main);
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.15s ease;
+            position: relative;
+        }
+
+        .day:active {
+            transform: scale(0.95);
+        }
+
+        .day.all-completed {
+            background: var(--soft-blue-bg);
+            border-color: var(--border-color);
+        }
+
+        .day.selected {
+            background: var(--bg-main);
+            border: 2px solid var(--primary);
+        }
+
+        .day.today {
+            background: var(--today-bg);
+            color: #ffffff;
+            border-color: var(--today-bg);
+        }
+
+        .day.today.selected {
+            border: 2px solid var(--primary);
+            box-shadow: inset 0 0 0 1px #ffffff;
+        }
+
+        .day-num {
+            line-height: 1;
+        }
+
+        .task-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5px;
+            margin-top: 4px;
+            height: 12px;
+        }
+
+        .task-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: var(--primary);
+        }
+
+        .day.today .task-dot {
+            background-color: #ffffff;
+        }
+
+        .task-badge {
+            font-size: 9.5px;
+            font-weight: 700;
+            color: var(--text-main);
+            background: var(--soft-blue-bg);
+            padding: 1px 4px;
+            border-radius: 5px;
+            line-height: 1;
+        }
+
+        .day.today .task-badge {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+
+        .plant-icon {
+            font-size: 11.5px;
+            line-height: 1;
+            animation: popIn 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.6); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* 섹션 공통 */
+        .list-section {
+            margin-bottom: 24px;
+        }
+
+        .list-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 0 2px;
+        }
+
+        .section-title {
+            font-size: 15.5px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .section-count {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-hover);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* 오늘 할 일 아이템 */
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 14px;
+            background: var(--accent-bg);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--primary);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            transition: opacity 0.2s ease;
+        }
+
+        .task-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .task-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+            word-break: keep-all;
+            line-height: 1.35;
+        }
+
+        .task-item.completed {
+            opacity: 0.55;
+        }
+
+        .task-item.completed .task-name {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        .check-btn {
+            flex-shrink: 0;
+            height: 34px;
+            padding: 0 14px;
+            border-radius: 8px;
+            border: none;
+            background: var(--primary);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+        }
+
+        .check-btn:active {
+            transform: scale(0.96);
+        }
+
+        .check-btn.done {
+            background: var(--today-bg);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 24px 12px;
+            font-size: 13.5px;
+            color: var(--text-muted);
+            background: var(--accent-bg);
+            border: 1px dashed var(--border-color);
+            border-radius: 12px;
+        }
+
+        /* 전체 루틴 아코디언 */
+        .accordion-trigger {
+            width: 100%;
+            min-height: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: none;
+            border: none;
+            padding: 6px 2px;
+            cursor: pointer;
+            font-family: inherit;
+            color: var(--text-main);
+        }
+
+        .triangle-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            color: var(--text-muted);
+            transition: transform 0.25s ease, color 0.15s ease;
+            transform: rotate(180deg);
+        }
+
+        .accordion-trigger:hover .triangle-icon {
+            color: var(--text-main);
+        }
+
+        .triangle-icon.collapsed {
+            transform: rotate(0deg);
+        }
+
+        .accordion-body {
+            max-height: 1400px;
+            overflow: hidden;
+            transition: max-height 0.28s ease, opacity 0.2s ease, margin-top 0.2s ease;
+            opacity: 1;
+            margin-top: 10px;
+        }
+
+        .accordion-body.collapsed {
             max-height: 0;
             opacity: 0;
             margin-top: 0;
             pointer-events: none;
         }
+
+        .routine-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--text-muted);
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+
+        .routine-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .routine-info strong {
+            display: block;
+            font-size: 14.5px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .routine-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .row-actions {
+            flex-shrink: 0;
+            display: flex;
+            gap: 6px;
+        }
+
+        .icon-btn {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--today-bg);
+            cursor: pointer;
+            transition: background-color 0.15s ease, transform 0.1s ease;
+        }
+
+        .icon-btn:hover {
+            background: var(--soft-blue-bg);
+        }
+
+        .icon-btn:active {
+            transform: scale(0.94);
+        }
+
+        .icon-btn.delete {
+            color: var(--danger);
+        }
+
+        .icon-btn.delete:hover {
+            background: #fdf2f2;
+        }
+
+        /* 토스트 알림 */
+        .toast {
+            position: fixed;
+            bottom: calc(24px + env(safe-area-inset-bottom));
+            left: 50%;
+            transform: translateX(-50%) translateY(16px);
+            background: var(--today-bg);
+            color: #ffffff;
+            padding: 11px 20px;
+            border-radius: 99px;
+            font-size: 13.5px;
+            font-weight: 500;
+            white-space: nowrap;
+            box-shadow: 0 8px 20px rgba(30, 41, 59, 0.22);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 300;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>ROUTINE</h1>
-    <div class="section">
-        <div class="input-group">
-            <label for="routineName">루틴 이름</label>
-            <input type="text" id="routineName" placeholder="예: 분리수거, 영양제 챙겨먹기">
+
+<main class="app-shell">
+    <header>
+        <div class="header-left">
+            <h1>ROUTINE</h1>
+            <span class="subtitle" id="todayHeaderDate"></span>
         </div>
-        <div class="input-group">
-            <label for="routineStartDate">시작일 지정</label>
-            <input type="date" id="routineStartDate">
+        <button class="btn-settings" onclick="openSettings()" type="button" aria-label="설정 열기" title="설정">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+        </button>
+    </header>
+
+    <div class="main-grid">
+        <div class="col-left">
+            <section class="composer">
+                <div class="field-row">
+                    <label class="field-label" for="routineName">루틴 이름</label>
+                    <input type="text" id="routineName" placeholder="예: 필터 교체, 종합검진, 영양제">
+                </div>
+                <div class="field-row field-split">
+                    <div>
+                        <label class="field-label" for="routineStartDate">시작일 지정</label>
+                        <input type="date" id="routineStartDate">
+                    </div>
+                    <div>
+                        <label class="field-label" for="aiCycleInput">반복 주기</label>
+                        <input type="text" id="aiCycleInput" placeholder="예: 매일, 3일마다, 1년">
+                    </div>
+                </div>
+                <div class="composer-actions">
+                    <button class="btn-primary" id="btnSubmit" onclick="handleSubmit()">루틴 생성</button>
+                    <button class="btn-ghost" id="btnCancel" onclick="resetForm()">취소</button>
+                </div>
+            </section>
+
+            <section class="calendar-wrap">
+                <div class="calendar-top">
+                    <div class="calendar-title-group">
+                        <h2 id="calendarTitle"></h2>
+                        <button type="button" class="btn-today" id="btnGoToday" onclick="goToToday()" aria-label="오늘 날짜로 이동">오늘</button>
+                    </div>
+                    <div class="nav-btns">
+                        <button class="nav-btn" onclick="changeMonth(-1)" aria-label="이전 달">‹</button>
+                        <button class="nav-btn" onclick="changeMonth(1)" aria-label="다음 달">›</button>
+                    </div>
+                </div>
+                <div class="calendar-grid" id="calendarGrid"></div>
+            </section>
         </div>
-        <div class="input-group">
-            <label for="aiCycleInput">반복 주기</label>
-            <input type="text" id="aiCycleInput" placeholder="예: 매일 / 격일 / 월수금 / 매달 15일">
+
+        <div class="col-right">
+            <section class="list-section">
+                <div class="section-head">
+                    <h3 class="section-title" id="todaySectionTitle">오늘 해야 할 일</h3>
+                    <span class="section-count" id="todayProgress"></span>
+                </div>
+                <ul id="todayContainer"></ul>
+            </section>
+
+            <section class="list-section">
+                <button class="accordion-trigger" onclick="toggleAllRoutines()" type="button" aria-label="전체 루틴 목록 접기 및 펼치기">
+                    <span class="section-title">전체 루틴 목록</span>
+                    <span class="triangle-icon" id="toggleIcon">
+                        <svg width="11" height="11" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+                            <path d="M2.2 4.2C1.8 4.2 1.6 4.7 1.9 5L5.6 8.9C5.8 9.1 6.2 9.1 6.4 8.9L10.1 5C10.4 4.7 10.2 4.2 9.8 4.2H2.2Z"/>
+                        </svg>
+                    </span>
+                </button>
+                <div class="accordion-body" id="allRoutinesWrapper">
+                    <ul id="allContainer"></ul>
+                </div>
+            </section>
         </div>
-        <button class="btn-add" onclick="addRoutine()">루틴 생성</button>
     </div>
-    <div class="section">
-        <div class="calendar-container">
-            <div class="calendar-header">
-                <button onclick="changeMonth(-1)">◀</button>
-                <h3 id="calendarTitle"></h3>
-                <button onclick="changeMonth(1)">▶</button>
+</main>
+
+<!-- 설정 모달 -->
+<div class="modal-backdrop" id="settingsModal" onclick="closeSettingsOnBackdrop(event)">
+    <div class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <div class="modal-head">
+            <h3 id="settingsTitle">화면 설정</h3>
+            <button class="btn-close-modal" onclick="closeSettings()" type="button" aria-label="닫기">✕</button>
+        </div>
+
+        <div class="setting-group">
+            <div class="setting-label-row">
+                <span class="setting-label">달성 이모지 (달력 표시)</span>
+                <button type="button" class="btn-mini" onclick="resetEmojis()">기본값 (🌱/🌷)</button>
             </div>
-            <div class="calendar-grid" id="calendarGrid"></div>
+            <div class="emoji-grid">
+                <div class="emoji-card">
+                    <div class="emoji-card-head">
+                        <span>1단계 (진행 중)</span>
+                        <small>일부 달성</small>
+                    </div>
+                    <div class="emoji-input-row">
+                        <input type="text" class="emoji-input" id="partialEmojiInput" value="🌱" oninput="setEmoji('partial', this.value)" aria-label="진행 중 이모티콘">
+                        <div class="emoji-presets">
+                            <button type="button" class="emoji-preset-btn" onclick="setEmoji('partial', '🌱')">🌱</button>
+                            <button type="button" class="emoji-preset-btn" onclick="setEmoji('partial', '🌿')">🌿</button>
+                            <button type="button" class="emoji-preset-btn" onclick="setEmoji('partial', '🍀')">🍀</button>
+                            <button type="button" class="emoji-preset-btn" onclick="setEmoji('partial', '💧')">💧</button>
+                            <button type="button" class="emoji-preset-btn" onclick="setEmoji('partial', '✨')">✨</button>
+                            <button type="button" class="emoji-preset-btn" onclick="setEmoji('partial', '🐣')">🐣</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="emoji-card">
+                    <div class="emoji-card-head">
+                        <span>2단계 (모두 달성)</span>
+                        <small>100% 완료</small>
+                    </div>
+                    <div class="emoji-input-row">
+                        <input type="text" class="emoji-input" id="completeEmojiInput" value="🌷" oninput="setEmoji('complete', this.value)" aria-label="모두 달성 이모티콘">
+                        <div class="emoji-presets">
+                            <button type="button" class="emoji-preset-btn" onclick="setEmoji('complete', '🌷')">🌷</button>
+                            <button type="button" class="emoji-preset-btn" onclick="setEmoji('complete', '🌻')">🌻</button>
+                            <button type="button" class="emoji-preset-btn" onclick="setEmoji('complete', '🌸')">🌸</button>
+                            <button type="button" class="emoji-preset-btn" onclick="setEmoji('complete', '🌳')">🌳</button>
+                            <button type="button" class="emoji-preset-btn" onclick="setEmoji('complete', '⭐')">⭐</button>
+                            <button type="button" class="emoji-preset-btn" onclick="setEmoji('complete', '🐥')">🐥</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="section">
-        <h2 id="todaySectionTitle">🔹 오늘 해야 할 일</h2>
-        <ul id="todayContainer"></ul>
-    </div>
-    <div class="section">
-        <h2 class="toggle-header" onclick="toggleAllRoutines()">
-            <span>📋 전체 루틴 목록</span>
-            <span class="toggle-icon" id="toggleIcon">▲</span>
-        </h2>
-        <div class="collapsible-wrapper" id="allRoutinesWrapper">
-            <ul id="allContainer"></ul>
+
+        <div class="setting-group">
+            <span class="setting-label">테마 색상</span>
+            <div class="color-options">
+                <button type="button" class="color-chip" data-theme-val="denim" onclick="setTheme('denim')">
+                    <span class="swatch" style="background:#9aa8ca;"></span>
+                    <span>데님</span>
+                </button>
+                <button type="button" class="color-chip" data-theme-val="sage" onclick="setTheme('sage')">
+                    <span class="swatch" style="background:#8ba892;"></span>
+                    <span>세이지</span>
+                </button>
+                <button type="button" class="color-chip" data-theme-val="sand" onclick="setTheme('sand')">
+                    <span class="swatch" style="background:#b8a38c;"></span>
+                    <span>샌드</span>
+                </button>
+                <button type="button" class="color-chip" data-theme-val="lavender" onclick="setTheme('lavender')">
+                    <span class="swatch" style="background:#a396c2;"></span>
+                    <span>라벤더</span>
+                </button>
+                <button type="button" class="color-chip" data-theme-val="slate" onclick="setTheme('slate')">
+                    <span class="swatch" style="background:#7b8794;"></span>
+                    <span>슬레이트</span>
+                </button>
+            </div>
+            <div class="custom-color-bar" id="customColorBar">
+                <div class="custom-color-info">
+                    <strong>직접 색상 선택</strong>
+                    <span>원하는 색을 고르면 전체 계열이 맞춰집니다</span>
+                </div>
+                <div class="color-picker-wrap">
+                    <input type="color" id="customColorPicker" value="#7aa2c4" oninput="setCustomColor(this.value)" aria-label="커스텀 색상 선택">
+                </div>
+            </div>
         </div>
+
+        <div class="setting-group">
+            <span class="setting-label">글꼴 스타일</span>
+            <div class="font-options">
+                <button type="button" class="option-btn" data-font-val="pretendard" style="font-family:'Pretendard',sans-serif;" onclick="setFont('pretendard')">기본 고딕</button>
+                <button type="button" class="option-btn" data-font-val="gowun-dodum" style="font-family:'Gowun Dodum',sans-serif;" onclick="setFont('gowun-dodum')">둥근 돋움</button>
+                <button type="button" class="option-btn" data-font-val="gowun-batang" style="font-family:'Gowun Batang',serif;" onclick="setFont('gowun-batang')">감성 바탕</button>
+                <button type="button" class="option-btn" data-font-val="noto-sans" style="font-family:'Noto Sans KR',sans-serif;" onclick="setFont('noto-sans')">노토 산스</button>
+            </div>
+            <div class="font-upload-box" id="fontUploadBox">
+                <div class="font-upload-text">
+                    <strong id="uploadedFontName">내 폰트 파일 적용</strong>
+                    <span>.ttf, .otf, .woff 파일 업로드</span>
+                </div>
+                <div class="font-upload-actions">
+                    <input type="file" id="fontFileInput" accept=".ttf,.otf,.woff,.woff2" style="display:none;" onchange="handleFontUpload(event)">
+                    <button type="button" class="btn-mini" onclick="document.getElementById('fontFileInput').click()">파일 선택</button>
+                    <button type="button" class="btn-mini" id="btnRemoveCustomFont" style="display:none; color:var(--danger);" onclick="removeCustomFont()">해제</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="setting-group">
+            <span class="setting-label">화면 보기 방향 (패드 · 노트북 · PC)</span>
+            <div class="layout-options">
+                <button type="button" class="option-btn" data-layout-val="portrait" onclick="setLayout('portrait')">세로 보기 (기본)</button>
+                <button type="button" class="option-btn" data-layout-val="landscape" onclick="setLayout('landscape')">가로 보기 (2단 분할)</button>
+            </div>
+            <p class="layout-note">가로 보기는 태블릿·노트북·PC처럼 넓은 화면에서 좌우 2단으로 넓게 표시됩니다.</p>
+        </div>
+
+        <button type="button" class="btn-primary" style="width:100%;" onclick="closeSettings()">완료</button>
     </div>
 </div>
+
+<div class="toast" id="toast"></div>
+
 <script>
-    var routines = JSON.parse(localStorage.getItem('routines')) || [];
+    var routines = [];
+    try {
+        var saved = JSON.parse(localStorage.getItem('routines'));
+        if (Array.isArray(saved)) routines = saved;
+    } catch (e) {
+        routines = [];
+    }
+
+    var completedRecords = {};
+    try {
+        var savedCompleted = JSON.parse(localStorage.getItem('completedRecords'));
+        if (savedCompleted && typeof savedCompleted === 'object') completedRecords = savedCompleted;
+    } catch (e) {
+        completedRecords = {};
+    }
+
+    var appPrefs = {
+        theme: 'denim',
+        customColor: '#7aa2c4',
+        font: 'pretendard',
+        customFontName: '',
+        customFontData: '',
+        layout: 'portrait',
+        partialEmoji: '🌱',
+        completeEmoji: '🌷'
+    };
+    try {
+        var savedPrefs = JSON.parse(localStorage.getItem('routineAppPrefs'));
+        if (savedPrefs && typeof savedPrefs === 'object') {
+            appPrefs.theme = savedPrefs.theme || 'denim';
+            appPrefs.customColor = savedPrefs.customColor || '#7aa2c4';
+            appPrefs.font = savedPrefs.font || 'pretendard';
+            appPrefs.customFontName = savedPrefs.customFontName || '';
+            appPrefs.customFontData = savedPrefs.customFontData || '';
+            appPrefs.layout = savedPrefs.layout || 'portrait';
+            appPrefs.partialEmoji = savedPrefs.partialEmoji || '🌱';
+            appPrefs.completeEmoji = savedPrefs.completeEmoji || '🌷';
+        }
+    } catch (e) {}
+
+    var fontMap = {
+        'pretendard': '"Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+        'gowun-dodum': '"Gowun Dodum", "Pretendard", sans-serif',
+        'gowun-batang': '"Gowun Batang", Georgia, serif',
+        'noto-sans': '"Noto Sans KR", "Pretendard", sans-serif'
+    };
+
+    var needSave = false;
+    for (var idx = 0; idx < routines.length; idx++) {
+        if (routines[idx] && !routines[idx].id) {
+            routines[idx].id = 'rt_' + Date.now() + '_' + idx;
+            needSave = true;
+        }
+    }
+    if (needSave) localStorage.setItem('routines', JSON.stringify(routines));
+
     var currentCalDate = new Date();
     var selectedDate = new Date();
-    selectedDate.setHours(0,0,0,0);
+    selectedDate.setHours(0, 0, 0, 0);
+    var editingIndex = -1;
+    var toastTimer = null;
+
+    function hexToHsl(hex) {
+        hex = hex.replace(/^#/, '');
+        if (hex.length === 3) {
+            hex = hex.split('').map(function(c) { return c + c; }).join('');
+        }
+        var r = parseInt(hex.substring(0, 2), 16) / 255;
+        var g = parseInt(hex.substring(2, 4), 16) / 255;
+        var b = parseInt(hex.substring(4, 6), 16) / 255;
+
+        var max = Math.max(r, g, b), min = Math.min(r, g, b);
+        var h, s, l = (max + min) / 2;
+
+        if (max === min) {
+            h = s = 0;
+        } else {
+            var d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            switch (max) {
+                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                case g: h = (b - r) / d + 2; break;
+                case b: h = (r - g) / d + 4; break;
+            }
+            h /= 6;
+        }
+        return {
+            h: Math.round(h * 360),
+            s: Math.round(s * 100),
+            l: Math.round(l * 100)
+        };
+    }
+
+    function applyCustomColorPalette(hex) {
+        var hsl = hexToHsl(hex);
+        var h = hsl.h;
+        var s = Math.min(hsl.s, 65);
+        var root = document.documentElement;
+
+        root.style.setProperty('--bg-main', 'hsl(' + h + ', ' + Math.round(s * 0.45) + '%, 95%)');
+        root.style.setProperty('--bg-card', '#ffffff');
+        root.style.setProperty('--border-color', 'hsl(' + h + ', ' + Math.round(s * 0.55) + '%, 82%)');
+        root.style.setProperty('--text-main', 'hsl(' + h + ', ' + Math.round(s * 0.75) + '%, 26%)');
+        root.style.setProperty('--text-muted', 'hsl(' + h + ', ' + Math.round(s * 0.25) + '%, 48%)');
+        root.style.setProperty('--primary', 'hsl(' + h + ', ' + s + '%, 62%)');
+        root.style.setProperty('--primary-hover', 'hsl(' + h + ', ' + s + '%, 52%)');
+        root.style.setProperty('--accent-bg', 'hsl(' + h + ', ' + Math.round(s * 0.4) + '%, 98%)');
+        root.style.setProperty('--today-bg', 'hsl(' + h + ', ' + Math.round(s * 0.65) + '%, 36%)');
+        root.style.setProperty('--soft-blue-bg', 'hsl(' + h + ', ' + Math.round(s * 0.55) + '%, 92%)');
+    }
+
+    function clearInlineColorVars() {
+        var vars = ['--bg-main', '--bg-card', '--border-color', '--text-main', '--text-muted', '--primary', '--primary-hover', '--accent-bg', '--today-bg', '--soft-blue-bg'];
+        for (var i = 0; i < vars.length; i++) {
+            document.documentElement.style.removeProperty(vars[i]);
+        }
+    }
+
+    function applyCustomFontFace(dataUrl) {
+        var styleTag = document.getElementById('dynamicCustomFontStyle');
+        if (!styleTag) return;
+        if (dataUrl) {
+            styleTag.textContent = '@font-face { font-family: "UserCustomFont"; src: url("' + dataUrl + '"); font-display: swap; }';
+        } else {
+            styleTag.textContent = '';
+        }
+    }
+
+    function applyPreferences() {
+        clearInlineColorVars();
+        if (appPrefs.theme === 'custom') {
+            document.documentElement.removeAttribute('data-theme');
+            applyCustomColorPalette(appPrefs.customColor);
+        } else if (appPrefs.theme === 'denim') {
+            document.documentElement.removeAttribute('data-theme');
+        } else {
+            document.documentElement.setAttribute('data-theme', appPrefs.theme);
+        }
+
+        var picker = document.getElementById('customColorPicker');
+        if (picker) picker.value = appPrefs.customColor;
+
+        var customColorBar = document.getElementById('customColorBar');
+        if (customColorBar) {
+            customColorBar.classList.toggle('active', appPrefs.theme === 'custom');
+        }
+
+        var partialInput = document.getElementById('partialEmojiInput');
+        var completeInput = document.getElementById('completeEmojiInput');
+        if (partialInput && document.activeElement !== partialInput) {
+            partialInput.value = appPrefs.partialEmoji;
+        }
+        if (completeInput && document.activeElement !== completeInput) {
+            completeInput.value = appPrefs.completeEmoji;
+        }
+
+        if (appPrefs.customFontData) {
+            applyCustomFontFace(appPrefs.customFontData);
+        }
+
+        if (appPrefs.font === 'custom' && appPrefs.customFontData) {
+            document.documentElement.style.setProperty('--font-family', '"UserCustomFont", "Pretendard", sans-serif');
+        } else {
+            var selectedFont = fontMap[appPrefs.font] || fontMap['pretendard'];
+            document.documentElement.style.setProperty('--font-family', selectedFont);
+        }
+
+        var uploadedFontNameEl = document.getElementById('uploadedFontName');
+        var btnRemoveFont = document.getElementById('btnRemoveCustomFont');
+        var fontUploadBox = document.getElementById('fontUploadBox');
+
+        if (appPrefs.customFontName) {
+            if (uploadedFontNameEl) uploadedFontNameEl.innerText = appPrefs.customFontName;
+            if (btnRemoveFont) btnRemoveFont.style.display = 'inline-flex';
+        } else {
+            if (uploadedFontNameEl) uploadedFontNameEl.innerText = '내 폰트 파일 적용';
+            if (btnRemoveFont) btnRemoveFont.style.display = 'none';
+        }
+        if (fontUploadBox) {
+            fontUploadBox.classList.toggle('active', appPrefs.font === 'custom' && !!appPrefs.customFontData);
+        }
+
+        if (appPrefs.layout === 'landscape') {
+            document.body.classList.add('layout-landscape');
+        } else {
+            document.body.classList.remove('layout-landscape');
+        }
+
+        var themeChips = document.querySelectorAll('.color-chip');
+        for (var i = 0; i < themeChips.length; i++) {
+            themeChips[i].classList.toggle('active', themeChips[i].getAttribute('data-theme-val') === appPrefs.theme);
+        }
+
+        var fontBtns = document.querySelectorAll('[data-font-val]');
+        for (var j = 0; j < fontBtns.length; j++) {
+            fontBtns[j].classList.toggle('active', fontBtns[j].getAttribute('data-font-val') === appPrefs.font);
+        }
+
+        var layoutBtns = document.querySelectorAll('[data-layout-val]');
+        for (var k = 0; k < layoutBtns.length; k++) {
+            layoutBtns[k].classList.toggle('active', layoutBtns[k].getAttribute('data-layout-val') === appPrefs.layout);
+        }
+    }
+
+    function savePreferences() {
+        try {
+            localStorage.setItem('routineAppPrefs', JSON.stringify(appPrefs));
+        } catch (e) {
+            var fallbackPrefs = {
+                theme: appPrefs.theme,
+                customColor: appPrefs.customColor,
+                font: appPrefs.font === 'custom' ? 'pretendard' : appPrefs.font,
+                customFontName: '',
+                customFontData: '',
+                layout: appPrefs.layout,
+                partialEmoji: appPrefs.partialEmoji,
+                completeEmoji: appPrefs.completeEmoji
+            };
+            localStorage.setItem('routineAppPrefs', JSON.stringify(fallbackPrefs));
+            showToast("폰트 파일 용량이 커서 현재 세션에만 적용됩니다");
+        }
+    }
+
+    function setEmoji(stage, val) {
+        var trimmed = (val || '').trim();
+        var chosen = trimmed ? Array.from(trimmed)[0] : (stage === 'partial' ? '🌱' : '🌷');
+
+        if (stage === 'partial') {
+            appPrefs.partialEmoji = chosen;
+            var partialInput = document.getElementById('partialEmojiInput');
+            if (partialInput) partialInput.value = trimmed ? chosen : '';
+        } else {
+            appPrefs.completeEmoji = chosen;
+            var completeInput = document.getElementById('completeEmojiInput');
+            if (completeInput) completeInput.value = trimmed ? chosen : '';
+        }
+
+        savePreferences();
+        renderCalendar();
+    }
+
+    function resetEmojis() {
+        appPrefs.partialEmoji = '🌱';
+        appPrefs.completeEmoji = '🌷';
+        var partialInput = document.getElementById('partialEmojiInput');
+        var completeInput = document.getElementById('completeEmojiInput');
+        if (partialInput) partialInput.value = '🌱';
+        if (completeInput) completeInput.value = '🌷';
+        savePreferences();
+        renderCalendar();
+        showToast("기본 이모지로 복원되었습니다");
+    }
+
+    function setTheme(themeVal) {
+        appPrefs.theme = themeVal;
+        applyPreferences();
+        savePreferences();
+    }
+
+    function setCustomColor(hexVal) {
+        appPrefs.customColor = hexVal;
+        appPrefs.theme = 'custom';
+        applyPreferences();
+        savePreferences();
+    }
+
+    function setFont(fontVal) {
+        appPrefs.font = fontVal;
+        applyPreferences();
+        savePreferences();
+    }
+
+    function handleFontUpload(event) {
+        var file = event.target.files && event.target.files[0];
+        if (!file) return;
+
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var dataUrl = e.target.result;
+            appPrefs.customFontName = file.name.replace(/\.[^/.]+$/, "");
+            appPrefs.customFontData = dataUrl;
+            appPrefs.font = 'custom';
+            applyPreferences();
+            savePreferences();
+            showToast("폰트가 적용되었습니다");
+        };
+        reader.readAsDataURL(file);
+        event.target.value = '';
+    }
+
+    function removeCustomFont() {
+        appPrefs.customFontName = '';
+        appPrefs.customFontData = '';
+        if (appPrefs.font === 'custom') {
+            appPrefs.font = 'pretendard';
+        }
+        applyCustomFontFace('');
+        applyPreferences();
+        savePreferences();
+        showToast("기본 글꼴로 복원되었습니다");
+    }
+
+    function setLayout(layoutVal) {
+        appPrefs.layout = layoutVal;
+        applyPreferences();
+        savePreferences();
+    }
+
+    function openSettings() {
+        applyPreferences();
+        var modal = document.getElementById('settingsModal');
+        if (modal) modal.classList.add('open');
+    }
+
+    function closeSettings() {
+        var partialInput = document.getElementById('partialEmojiInput');
+        var completeInput = document.getElementById('completeEmojiInput');
+        if (partialInput && !partialInput.value.trim()) {
+            appPrefs.partialEmoji = '🌱';
+            partialInput.value = '🌱';
+        }
+        if (completeInput && !completeInput.value.trim()) {
+            appPrefs.completeEmoji = '🌷';
+            completeInput.value = '🌷';
+        }
+        savePreferences();
+        renderCalendar();
+
+        var modal = document.getElementById('settingsModal');
+        if (modal) modal.classList.remove('open');
+    }
+
+    function closeSettingsOnBackdrop(e) {
+        if (e.target && e.target.id === 'settingsModal') {
+            closeSettings();
+        }
+    }
 
     window.onload = function() {
-        var todayStr = new Date().toISOString().split('T')[0];
-        var el = document.getElementById('routineStartDate');
-        if(el) el.value = todayStr;
+        applyPreferences();
+        var now = new Date();
+        var days = ['일', '월', '화', '수', '목', '금', '토'];
+        var headerDate = document.getElementById('todayHeaderDate');
+        if (headerDate) {
+            headerDate.innerText = (now.getMonth() + 1) + '월 ' + now.getDate() + '일 (' + days[now.getDay()] + ')';
+        }
+        resetForm();
         displayRoutines();
     };
+
+    function showToast(message) {
+        var toast = document.getElementById('toast');
+        if (!toast) return;
+        toast.innerText = message;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function() {
+            toast.classList.remove('show');
+        }, 1800);
+    }
+
+    function getDateKey(date) {
+        var yyyy = date.getFullYear();
+        var mm = String(date.getMonth() + 1).padStart(2, '0');
+        var dd = String(date.getDate()).padStart(2, '0');
+        return yyyy + '-' + mm + '-' + dd;
+    }
 
     function toggleAllRoutines() {
         var wrapper = document.getElementById('allRoutinesWrapper');
@@ -315,139 +1715,364 @@
 
         if (wrapper.classList.contains('collapsed')) {
             wrapper.classList.remove('collapsed');
-            icon.innerText = '▲';
+            icon.classList.remove('collapsed');
         } else {
             wrapper.classList.add('collapsed');
-            icon.innerText = '▼';
+            icon.classList.add('collapsed');
         }
     }
 
     function parseAiCycle(text) {
-        var cleanText = (text || '').replace(/\s+/g, ''); 
-        if (cleanText.indexOf('매일') !== -1) return { cycle: 'daily', text: '매일 반복', details: {} };
-        if (cleanText.indexOf('격일') !== -1 || cleanText.indexOf('2일') !== -1) return { cycle: 'every-2-days', text: '격일 반복', details: {} };
-        if (cleanText === '매주' || cleanText.indexOf('7일') !== -1) return { cycle: 'weekly', text: '매주 반복', details: {} };
-        if (cleanText.indexOf('격주') !== -1 || cleanText.indexOf('2주') !== -1 || cleanText.indexOf('14일') !== -1) return { cycle: 'every-2-weeks', text: '격주 반복', details: {} };
-        if (cleanText.indexOf('매달') !== -1 || cleanText.indexOf('매월') !== -1) {
-            var numStr = cleanText.replace(/[^0-9]/g, ''); 
-            if (numStr) return { cycle: 'monthly', text: '매달 ' + numStr + '일 반복', details: { monthDay: numStr } };
+        var rawText = text || '';
+        var cleanText = rawText.replace(/\s+/g, '');
+
+        // 연 단위 인식
+        var yearIntervalMatch = cleanText.match(/(\d+)년/);
+        if (yearIntervalMatch) {
+            var yearInterval = parseInt(yearIntervalMatch[1], 10);
+            if (yearInterval === 1) {
+                return { cycle: 'yearly', text: '매년', details: { yearInterval: 1 }, raw: rawText };
+            }
+            if (yearInterval > 1) {
+                return {
+                    cycle: 'yearly',
+                    text: yearInterval + '년마다',
+                    details: { yearInterval: yearInterval },
+                    raw: rawText
+                };
+            }
         }
+        if (cleanText.indexOf('매년') !== -1 || cleanText === '연1회') {
+            return { cycle: 'yearly', text: '매년', details: { yearInterval: 1 }, raw: rawText };
+        }
+
+        if (cleanText.indexOf('매달') !== -1 || cleanText.indexOf('매월') !== -1) {
+            var numStr = cleanText.replace(/[^0-9]/g, '');
+            if (numStr) {
+                return {
+                    cycle: 'monthly',
+                    text: '매달 ' + parseInt(numStr, 10) + '일',
+                    details: { monthDay: parseInt(numStr, 10) },
+                    raw: rawText
+                };
+            }
+        }
+
+        var dayIntervalMatch = cleanText.match(/(\d+)일/);
+        if (dayIntervalMatch) {
+            var interval = parseInt(dayIntervalMatch[1], 10);
+            if (interval === 1) return { cycle: 'daily', text: '매일', details: {}, raw: rawText };
+            if (interval > 1) {
+                return {
+                    cycle: 'every-n-days',
+                    text: interval + '일마다',
+                    details: { interval: interval },
+                    raw: rawText
+                };
+            }
+        }
+
+        var weekIntervalMatch = cleanText.match(/(\d+)주/);
+        if (weekIntervalMatch) {
+            var weekInterval = parseInt(weekIntervalMatch[1], 10);
+            if (weekInterval === 1) return { cycle: 'weekly', text: '매주', details: {}, raw: rawText };
+            if (weekInterval > 1) {
+                return {
+                    cycle: 'every-n-days',
+                    text: weekInterval + '주마다',
+                    details: { interval: weekInterval * 7 },
+                    raw: rawText
+                };
+            }
+        }
+
+        if (cleanText === '매일') return { cycle: 'daily', text: '매일', details: {}, raw: rawText };
+        if (cleanText.indexOf('격일') !== -1) return { cycle: 'every-n-days', text: '격일 (2일마다)', details: { interval: 2 }, raw: rawText };
+        if (cleanText === '매주') return { cycle: 'weekly', text: '매주', details: {}, raw: rawText };
+        if (cleanText.indexOf('격주') !== -1) return { cycle: 'every-n-days', text: '격주 (14일마다)', details: { interval: 14 }, raw: rawText };
+
+        var dayParseTarget = cleanText.replace(/매주|매월|매달|요일/g, '');
         var weekdays = ['일', '월', '화', '수', '목', '금', '토'];
         var detectedDays = [];
-        for(var i=0; i<weekdays.length; i++) {
-            if (cleanText.indexOf(weekdays[i]) !== -1) detectedDays.push(weekdays[i]);
+
+        for (var i = 0; i < weekdays.length; i++) {
+            if (dayParseTarget.indexOf(weekdays[i]) !== -1) {
+                detectedDays.push(weekdays[i]);
+            }
         }
-        if (detectedDays.length > 0) return { cycle: 'custom-days', text: '지정 요일(' + detectedDays.join(', ') + ') 반복', details: { days: detectedDays } };
-        return { cycle: 'daily', text: '매일 반복 (기본 처리)', details: {} };
+
+        if (detectedDays.length > 0) {
+            return {
+                cycle: 'custom-days',
+                text: '매주 ' + detectedDays.join('·'),
+                details: { days: detectedDays },
+                raw: rawText
+            };
+        }
+
+        if (/^\d+$/.test(cleanText)) {
+            var numOnly = parseInt(cleanText, 10);
+            if (numOnly === 1) return { cycle: 'daily', text: '매일', details: {}, raw: rawText };
+            if (numOnly > 1) {
+                return {
+                    cycle: 'every-n-days',
+                    text: numOnly + '일마다',
+                    details: { interval: numOnly },
+                    raw: rawText
+                };
+            }
+        }
+
+        return { cycle: 'daily', text: '매일', details: {}, raw: rawText };
     }
 
     function isRoutineOnDate(routine, date) {
-        var targetDate = new Date(date); targetDate.setHours(0,0,0,0);
-        var startDay = new Date(routine.startDate || new Date()); startDay.setHours(0,0,0,0);
-        var diffDays = Math.floor((targetDate - startDay) / (1000 * 60 * 60 * 24));
+        if (!routine) return false;
+        var targetDate = new Date(date);
+        targetDate.setHours(0, 0, 0, 0);
+
+        var parts = String(routine.startDate || '').split('-');
+        var startDay = parts.length === 3
+            ? new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10))
+            : new Date(routine.startDate || new Date());
+
+        if (isNaN(startDay.getTime())) return false;
+        startDay.setHours(0, 0, 0, 0);
+
+        var diffDays = Math.round((targetDate - startDay) / (1000 * 60 * 60 * 24));
         var weekdays = ['일', '월', '화', '수', '목', '금', '토'];
         var dayOfWeek = weekdays[targetDate.getDay()];
+        var details = routine.details || {};
+
         if (diffDays < 0) return false;
         if (routine.cycle === 'daily') return true;
         if (routine.cycle === 'every-2-days') return diffDays % 2 === 0;
         if (routine.cycle === 'weekly') return diffDays % 7 === 0;
         if (routine.cycle === 'every-2-weeks') return diffDays % 14 === 0;
+
+        if (routine.cycle === 'every-n-days') {
+            var interval = parseInt(details.interval, 10) || 1;
+            return diffDays % interval === 0;
+        }
+
         if (routine.cycle === 'custom-days') {
-            if(routine.details && routine.details.days) {
-                return routine.details.days.indexOf(dayOfWeek) !== -1;
+            if (Array.isArray(details.days)) {
+                return details.days.indexOf(dayOfWeek) !== -1;
             }
             return false;
         }
-        if (routine.cycle === 'monthly') return targetDate.getDate() === parseInt(routine.details.monthDay);
+        if (routine.cycle === 'monthly') {
+            var mDay = parseInt(details.monthDay, 10);
+            return !isNaN(mDay) && targetDate.getDate() === mDay;
+        }
+        if (routine.cycle === 'yearly') {
+            var yInterval = parseInt(details.yearInterval, 10) || 1;
+            var yearDiff = targetDate.getFullYear() - startDay.getFullYear();
+            if (yearDiff < 0 || yearDiff % yInterval !== 0) return false;
+
+            if (startDay.getMonth() === 1 && startDay.getDate() === 29) {
+                var isLeap = (targetDate.getFullYear() % 4 === 0 && targetDate.getFullYear() % 100 !== 0) || (targetDate.getFullYear() % 400 === 0);
+                var expectedDay = isLeap ? 29 : 28;
+                return targetDate.getMonth() === 1 && targetDate.getDate() === expectedDay;
+            }
+
+            return targetDate.getMonth() === startDay.getMonth() && targetDate.getDate() === startDay.getDate();
+        }
         return false;
+    }
+
+    function updateTodayButtonVisibility() {
+        var btnToday = document.getElementById('btnGoToday');
+        if (!btnToday) return;
+
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        var isDifferentMonth = (currentCalDate.getFullYear() !== today.getFullYear()) || (currentCalDate.getMonth() !== today.getMonth());
+        var isDifferentSelected = selectedDate.getTime() !== today.getTime();
+
+        if (isDifferentMonth || isDifferentSelected) {
+            btnToday.classList.add('visible');
+        } else {
+            btnToday.classList.remove('visible');
+        }
+    }
+
+    function goToToday() {
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        currentCalDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        selectedDate = today;
+        displayRoutines();
     }
 
     function displayRoutines() {
         var todayContainer = document.getElementById('todayContainer');
         var allContainer = document.getElementById('allContainer');
         var todaySectionTitle = document.getElementById('todaySectionTitle');
-        if(!todayContainer || !allContainer) return;
-        todayContainer.innerHTML = ""; allContainer.innerHTML = "";
-        
+        var todayProgress = document.getElementById('todayProgress');
+        if (!todayContainer || !allContainer) return;
+
+        todayContainer.innerHTML = "";
+        allContainer.innerHTML = "";
+
         var isSelectedToday = selectedDate.toDateString() === new Date().toDateString();
-        if(todaySectionTitle) todaySectionTitle.innerText = isSelectedToday ? "🔹 오늘 해야 할 일" : "🔹 " + (selectedDate.getMonth()+1) + "월 " + selectedDate.getDate() + "일의 할 일";
-        
+        if (todaySectionTitle) {
+            todaySectionTitle.innerText = isSelectedToday
+                ? "오늘 해야 할 일"
+                : (selectedDate.getMonth() + 1) + "월 " + selectedDate.getDate() + "일의 할 일";
+        }
+
+        var dateKey = getDateKey(selectedDate);
+        var doneList = completedRecords[dateKey] || [];
         var taskCount = 0;
-        for(var i=0; i<routines.length; i++) {
+        var doneCount = 0;
+
+        var editIconSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>';
+        var deleteIconSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>';
+
+        for (var i = 0; i < routines.length; i++) {
             var routine = routines[i];
-            
-            var liAll = document.createElement('li'); 
-            liAll.className = 'all-box';
-            liAll.innerHTML = '<div><strong>' + routine.name + '</strong><span class="routine-period">🔁 ' + routine.cycleText + ' (시작일: ' + routine.startDate + ')</span></div><button class="btn-delete" onclick="deleteRoutine(' + i + ')">❌ 삭제</button>';
+            if (!routine) continue;
+
+            var liAll = document.createElement('li');
+            liAll.className = 'routine-row';
+            liAll.innerHTML =
+                '<div class="routine-info">' +
+                    '<strong>' + (routine.name || '이름 없음') + '</strong>' +
+                    '<span class="routine-meta">' + (routine.cycleText || '') + ' · ' + (routine.startDate || '') + ' 시작</span>' +
+                '</div>' +
+                '<div class="row-actions">' +
+                    '<button type="button" class="icon-btn" onclick="editRoutine(' + i + ')" aria-label="루틴 수정" title="수정">' + editIconSvg + '</button>' +
+                    '<button type="button" class="icon-btn delete" onclick="deleteRoutine(' + i + ')" aria-label="루틴 삭제" title="삭제">' + deleteIconSvg + '</button>' +
+                '</div>';
             allContainer.appendChild(liAll);
-            
+
             if (isRoutineOnDate(routine, selectedDate)) {
                 taskCount++;
-                var liToday = document.createElement('li'); 
-                liToday.className = 'today-box';
-                liToday.innerHTML = '<span class="today-text">▪️ ' + routine.name + '</span><button class="btn-check" onclick="completeTask(' + i + ', this)">완료</button>';
+                var isDone = doneList.indexOf(routine.id) !== -1;
+                if (isDone) doneCount++;
+
+                var liToday = document.createElement('li');
+                liToday.className = 'task-item' + (isDone ? ' completed' : '');
+
+                var btnText = isDone ? '완료됨' : '완료';
+                var btnClass = isDone ? 'check-btn done' : 'check-btn';
+
+                liToday.innerHTML =
+                    '<span class="task-name">' + routine.name + '</span>' +
+                    '<button class="' + btnClass + '" onclick="toggleCompleteTask(\'' + routine.id + '\')">' + btnText + '</button>';
                 todayContainer.appendChild(liToday);
             }
         }
 
-        if (taskCount === 0 && todayContainer) {
-            todayContainer.innerHTML = '<div class="no-task">🎉 예정된 루틴이 없습니다! 푹 쉬세요.</div>';
+        if (todayProgress) {
+            todayProgress.innerText = taskCount > 0 ? (doneCount + ' / ' + taskCount) : '';
         }
-        
+
+        if (taskCount === 0) {
+            todayContainer.innerHTML = '<div class="empty-state">예정된 루틴이 없습니다</div>';
+        }
+
+        if (routines.length === 0) {
+            allContainer.innerHTML = '<div class="empty-state">등록된 루틴이 없습니다</div>';
+        }
+
         renderCalendar();
     }
 
     function renderCalendar() {
-        var year = currentCalDate.getFullYear(); 
+        var year = currentCalDate.getFullYear();
         var month = currentCalDate.getMonth();
-        var titleEl = document.getElementById('calendarTitle'); 
-        if(titleEl) titleEl.innerText = year + "년 " + (month + 1) + "월";
-        
-        var grid = document.getElementById('calendarGrid'); 
-        if(!grid) return;
+        var titleEl = document.getElementById('calendarTitle');
+        if (titleEl) titleEl.innerText = year + "년 " + (month + 1) + "월";
+
+        updateTodayButtonVisibility();
+
+        var grid = document.getElementById('calendarGrid');
+        if (!grid) return;
         grid.innerHTML = '';
 
-        var weeks = ['일','월','화','수','목','금','토'];
-        for(var i=0; i<weeks.length; i++) { 
-            grid.innerHTML += '<div class="weekday">' + weeks[i] + '</div>'; 
+        var weeks = ['일', '월', '화', '수', '목', '금', '토'];
+        for (var i = 0; i < weeks.length; i++) {
+            grid.innerHTML += '<div class="weekday">' + weeks[i] + '</div>';
         }
 
-        var firstDay = new Date(year, month, 1).getDay(); 
+        var firstDay = new Date(year, month, 1).getDay();
         var lastDate = new Date(year, month + 1, 0).getDate();
 
         for (var i = 0; i < firstDay; i++) {
             grid.innerHTML += '<div></div>';
         }
 
+        var partialEmoji = appPrefs.partialEmoji || '🌱';
+        var completeEmoji = appPrefs.completeEmoji || '🌷';
+
         for (var d = 1; d <= lastDate; d++) {
-            var thisDate = new Date(year, month, d); 
-            thisDate.setHours(0,0,0,0);
+            var thisDate = new Date(year, month, d);
+            thisDate.setHours(0, 0, 0, 0);
 
             var isToday = thisDate.toDateString() === new Date().toDateString() ? 'today' : '';
             var isSelected = thisDate.getTime() === selectedDate.getTime() ? 'selected' : '';
-            
-            var hasTask = false;
-            for(var k=0; k<routines.length; k++) { 
-                if(isRoutineOnDate(routines[k], thisDate)) { 
-                    hasTask = true; 
-                    break; 
-                } 
-            }
-            var hasTaskClass = hasTask ? 'has-task' : '';
 
-            grid.innerHTML += '<div class="day ' + isToday + ' ' + isSelected + ' ' + hasTaskClass + '" onclick="clickCalDate(' + year + ',' + month + ',' + d + ')">' + d + '</div>';
+            var dateKey = getDateKey(thisDate);
+            var doneList = completedRecords[dateKey] || [];
+
+            var totalTasks = 0;
+            var doneTasks = 0;
+
+            for (var k = 0; k < routines.length; k++) {
+                if (isRoutineOnDate(routines[k], thisDate)) {
+                    totalTasks++;
+                    if (doneList.indexOf(routines[k].id) !== -1) {
+                        doneTasks++;
+                    }
+                }
+            }
+
+            var isAllDoneClass = (totalTasks > 0 && doneTasks === totalTasks) ? 'all-completed' : '';
+            var indicatorHtml = '<div class="task-indicator">';
+
+            if (totalTasks > 0) {
+                if (doneTasks === totalTasks) {
+                    indicatorHtml += '<span class="plant-icon" title="모두 달성">' + completeEmoji + '</span>';
+                } else if (doneTasks > 0) {
+                    indicatorHtml += '<span class="plant-icon" title="' + doneTasks + '/' + totalTasks + ' 달성">' + partialEmoji + '</span>';
+                } else if (totalTasks <= 3) {
+                    for (var t = 0; t < totalTasks; t++) {
+                        indicatorHtml += '<span class="task-dot"></span>';
+                    }
+                } else {
+                    indicatorHtml += '<span class="task-badge">' + totalTasks + '</span>';
+                }
+            }
+            indicatorHtml += '</div>';
+
+            grid.innerHTML +=
+                '<div class="day ' + isToday + ' ' + isSelected + ' ' + isAllDoneClass + '" onclick="clickCalDate(' + year + ',' + month + ',' + d + ')">' +
+                    '<span class="day-num">' + d + '</span>' +
+                    indicatorHtml +
+                '</div>';
         }
     }
 
-    function clickCalDate(y, m, d) { 
-        selectedDate = new Date(y, m, d); 
-        selectedDate.setHours(0,0,0,0); 
-        displayRoutines(); 
+    function clickCalDate(y, m, d) {
+        selectedDate = new Date(y, m, d);
+        selectedDate.setHours(0, 0, 0, 0);
+        displayRoutines();
     }
 
-    function changeMonth(dir) { 
-        currentCalDate.setMonth(currentCalDate.getMonth() + dir); 
-        renderCalendar(); 
+    function changeMonth(dir) {
+        currentCalDate.setMonth(currentCalDate.getMonth() + dir);
+        renderCalendar();
+    }
+
+    function handleSubmit() {
+        if (editingIndex === -1) {
+            addRoutine();
+        } else {
+            updateRoutine();
+        }
     }
 
     function addRoutine() {
@@ -456,38 +2081,119 @@
         var aiInput = document.getElementById('aiCycleInput');
 
         if (!nameInput || !startDateInput || !aiInput) return;
-        if (nameInput.value.trim() === "") { alert("루틴 이름을 입력해 주세요!"); return; }
-        if (!startDateInput.value) { alert("루틴 시작일을 선택해 주세요!"); return; }
-        if (aiInput.value.trim() === "") { alert("반복 주기를 입력해 주세요!"); return; }
+        if (nameInput.value.trim() === "") { showToast("루틴 이름을 입력해 주세요"); return; }
+        if (!startDateInput.value) { showToast("시작일을 선택해 주세요"); return; }
+        if (aiInput.value.trim() === "") { showToast("반복 주기를 입력해 주세요"); return; }
 
         var parsed = parseAiCycle(aiInput.value);
-        routines.push({ 
-            name: nameInput.value.trim(), 
-            cycle: parsed.cycle, 
-            cycleText: parsed.text, 
-            details: parsed.details, 
-            startDate: startDateInput.value 
+        routines.push({
+            id: 'rt_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+            name: nameInput.value.trim(),
+            cycle: parsed.cycle,
+            cycleText: parsed.text,
+            details: parsed.details,
+            startDate: startDateInput.value,
+            rawCycleInput: aiInput.value.trim()
         });
 
         localStorage.setItem('routines', JSON.stringify(routines));
-        nameInput.value = ""; 
-        aiInput.value = "";
+        resetForm();
         displayRoutines();
+        showToast("새 루틴이 생성되었습니다");
     }
 
-    function deleteRoutine(index) { 
-        if(confirm("이 루틴을 완전히 삭제하시겠습니까?")) { 
-            routines.splice(index, 1); 
-            localStorage.setItem('routines', JSON.stringify(routines)); 
-            displayRoutines(); 
-        } 
+    function editRoutine(index) {
+        var routine = routines[index];
+        if (!routine) return;
+
+        editingIndex = index;
+        document.getElementById('routineName').value = routine.name;
+        document.getElementById('routineStartDate').value = routine.startDate;
+        document.getElementById('aiCycleInput').value = routine.rawCycleInput || routine.cycleText;
+
+        document.getElementById('btnSubmit').innerText = "루틴 수정 완료";
+        document.getElementById('btnCancel').style.display = "inline-block";
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function completeTask(index, button) { 
-        alert('👏 완료!'); 
-        button.disabled = true; 
-        button.innerText = "🎉 완료됨"; 
-        button.parentElement.style.opacity = "0.5"; 
+    function updateRoutine() {
+        var nameInput = document.getElementById('routineName');
+        var startDateInput = document.getElementById('routineStartDate');
+        var aiInput = document.getElementById('aiCycleInput');
+
+        if (editingIndex === -1 || !routines[editingIndex]) return;
+        if (nameInput.value.trim() === "") { showToast("루틴 이름을 입력해 주세요"); return; }
+        if (!startDateInput.value) { showToast("시작일을 선택해 주세요"); return; }
+        if (aiInput.value.trim() === "") { showToast("반복 주기를 입력해 주세요"); return; }
+
+        var parsed = parseAiCycle(aiInput.value);
+        var existingId = routines[editingIndex].id || ('rt_' + Date.now());
+        routines[editingIndex] = {
+            id: existingId,
+            name: nameInput.value.trim(),
+            cycle: parsed.cycle,
+            cycleText: parsed.text,
+            details: parsed.details,
+            startDate: startDateInput.value,
+            rawCycleInput: aiInput.value.trim()
+        };
+
+        localStorage.setItem('routines', JSON.stringify(routines));
+        resetForm();
+        displayRoutines();
+        showToast("루틴이 수정되었습니다");
+    }
+
+    function resetForm() {
+        editingIndex = -1;
+        var nameInput = document.getElementById('routineName');
+        var startDateInput = document.getElementById('routineStartDate');
+        var aiInput = document.getElementById('aiCycleInput');
+
+        if (nameInput) nameInput.value = "";
+        if (aiInput) aiInput.value = "";
+
+        var now = new Date();
+        var yyyy = now.getFullYear();
+        var mm = String(now.getMonth() + 1).padStart(2, '0');
+        var dd = String(now.getDate()).padStart(2, '0');
+        if (startDateInput) startDateInput.value = yyyy + '-' + mm + '-' + dd;
+
+        var btnSubmit = document.getElementById('btnSubmit');
+        var btnCancel = document.getElementById('btnCancel');
+        if (btnSubmit) btnSubmit.innerText = "루틴 생성";
+        if (btnCancel) btnCancel.style.display = "none";
+    }
+
+    function deleteRoutine(index) {
+        if (confirm("이 루틴을 삭제할까요?")) {
+            if (editingIndex === index) {
+                resetForm();
+            }
+            routines.splice(index, 1);
+            localStorage.setItem('routines', JSON.stringify(routines));
+            displayRoutines();
+            showToast("루틴이 삭제되었습니다");
+        }
+    }
+
+    function toggleCompleteTask(routineId) {
+        var dateKey = getDateKey(selectedDate);
+        if (!completedRecords[dateKey]) {
+            completedRecords[dateKey] = [];
+        }
+
+        var idx = completedRecords[dateKey].indexOf(routineId);
+        if (idx === -1) {
+            completedRecords[dateKey].push(routineId);
+            showToast("루틴을 완료했습니다");
+        } else {
+            completedRecords[dateKey].splice(idx, 1);
+        }
+
+        localStorage.setItem('completedRecords', JSON.stringify(completedRecords));
+        displayRoutines();
     }
 </script>
 </body>
